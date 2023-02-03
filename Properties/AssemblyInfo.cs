@@ -1,16 +1,17 @@
-﻿using System.Reflection;
+﻿using System.Resources;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // La información general de un ensamblado se controla mediante el siguiente 
 // conjunto de atributos. Cambie estos valores de atributo para modificar la información
 // asociada con un ensamblado.
-[assembly: AssemblyTitle("EnviadorEmails")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("ESEND")]
+[assembly: AssemblyDescription("Email Sender by CSV with some utilities")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Jordi Serrano")]
-[assembly: AssemblyProduct("EnviadorEmails")]
-[assembly: AssemblyCopyright("Copyright © Jordi Serrano 2023")]
+[assembly: AssemblyCompany("j0rd1s3rr4n0")]
+[assembly: AssemblyProduct("ESEND")]
+[assembly: AssemblyCopyright("Copyright © J0rd1s3rr4n0 2023")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -34,3 +35,4 @@ using System.Runtime.InteropServices;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: NeutralResourcesLanguage("es")]
