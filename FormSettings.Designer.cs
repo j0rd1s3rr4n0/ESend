@@ -46,11 +46,11 @@
             this.label18 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.label16 = new System.Windows.Forms.Label();
+            this.tv_estado = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.tb_emailToTest = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnTestEmail = new System.Windows.Forms.Button();
             this.tb_password = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.tb_email = new System.Windows.Forms.TextBox();
@@ -247,11 +247,11 @@
             // 
             this.groupBox3.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.groupBox3.BackColor = System.Drawing.Color.Transparent;
-            this.groupBox3.Controls.Add(this.label16);
+            this.groupBox3.Controls.Add(this.tv_estado);
             this.groupBox3.Controls.Add(this.label15);
-            this.groupBox3.Controls.Add(this.textBox1);
+            this.groupBox3.Controls.Add(this.tb_emailToTest);
             this.groupBox3.Controls.Add(this.label14);
-            this.groupBox3.Controls.Add(this.button1);
+            this.groupBox3.Controls.Add(this.btnTestEmail);
             this.groupBox3.Controls.Add(this.tb_password);
             this.groupBox3.Controls.Add(this.label2);
             this.groupBox3.Controls.Add(this.tb_email);
@@ -268,15 +268,15 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Conexión";
             // 
-            // label16
+            // tv_estado
             // 
-            this.label16.AutoSize = true;
-            this.label16.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.label16.Location = new System.Drawing.Point(121, 266);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(146, 80);
-            this.label16.TabIndex = 31;
-            this.label16.Text = "Enviado\r\nError - Autenticación\r\nError - $ERROR\r\nPendiente";
+            this.tv_estado.AutoSize = true;
+            this.tv_estado.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.tv_estado.Location = new System.Drawing.Point(121, 274);
+            this.tv_estado.Name = "tv_estado";
+            this.tv_estado.Size = new System.Drawing.Size(15, 20);
+            this.tv_estado.TabIndex = 31;
+            this.tv_estado.Text = "-";
             // 
             // label15
             // 
@@ -289,12 +289,12 @@
             this.label15.TabIndex = 19;
             this.label15.Text = "Estado:";
             // 
-            // textBox1
+            // tb_emailToTest
             // 
-            this.textBox1.Location = new System.Drawing.Point(11, 220);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(255, 31);
-            this.textBox1.TabIndex = 18;
+            this.tb_emailToTest.Location = new System.Drawing.Point(11, 220);
+            this.tb_emailToTest.Name = "tb_emailToTest";
+            this.tb_emailToTest.Size = new System.Drawing.Size(255, 31);
+            this.tb_emailToTest.TabIndex = 18;
             // 
             // label14
             // 
@@ -307,30 +307,31 @@
             this.label14.TabIndex = 17;
             this.label14.Text = "Email Prueba Destinatario:";
             // 
-            // button1
+            // btnTestEmail
             // 
-            this.button1.AutoSize = true;
-            this.button1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.button1.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Bold);
-            this.button1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.button1.Location = new System.Drawing.Point(300, 219);
-            this.button1.Margin = new System.Windows.Forms.Padding(10);
-            this.button1.Name = "button1";
-            this.button1.Padding = new System.Windows.Forms.Padding(5);
-            this.button1.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.button1.Size = new System.Drawing.Size(95, 37);
-            this.button1.TabIndex = 16;
-            this.button1.Text = "Enviar Test";
-            this.button1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnTestEmail.AutoSize = true;
+            this.btnTestEmail.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnTestEmail.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btnTestEmail.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Bold);
+            this.btnTestEmail.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btnTestEmail.Location = new System.Drawing.Point(300, 219);
+            this.btnTestEmail.Margin = new System.Windows.Forms.Padding(10);
+            this.btnTestEmail.Name = "btnTestEmail";
+            this.btnTestEmail.Padding = new System.Windows.Forms.Padding(5);
+            this.btnTestEmail.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.btnTestEmail.Size = new System.Drawing.Size(95, 37);
+            this.btnTestEmail.TabIndex = 16;
+            this.btnTestEmail.Text = "Enviar Test";
+            this.btnTestEmail.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnTestEmail.UseVisualStyleBackColor = true;
+            this.btnTestEmail.Click += new System.EventHandler(this.button1_Click);
             // 
             // tb_password
             // 
             this.tb_password.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.tb_password.Location = new System.Drawing.Point(125, 64);
             this.tb_password.Name = "tb_password";
-            this.tb_password.PasswordChar = '-';
+            this.tb_password.PasswordChar = '*';
             this.tb_password.Size = new System.Drawing.Size(255, 31);
             this.tb_password.TabIndex = 14;
             // 
@@ -456,10 +457,10 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label tv_estado;
         private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox tb_emailToTest;
         private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnTestEmail;
     }
 }

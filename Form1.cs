@@ -16,6 +16,7 @@ using System.Collections;
 using System.Xml;
 using Newtonsoft.Json;
 using MailKit.Security;
+using System.Data.OleDb;
 
 namespace EnviadorEmails { 
     public partial class Form1 : Form
@@ -38,14 +39,14 @@ namespace EnviadorEmails {
         private async void button1_ClickAsync(object sender, EventArgs e)
         {
             
-            string emailTo = "jordiserrano@protonmail.ch";
-            // "jbglqljnymvjkyog"
+            string emailTo = "sanchezcarla2204@gmail.com"; // "jordiserrano@protonmail.ch"
             await readConfigFile();
 
             string myemail = config.Email.ToString();
             string mypassword = config.Contraseña.ToString();
             string server = config.Servidor.ToString();
             int port = Int32.Parse(config.Puerto.ToString());
+
 
             SmtpClient client = new SmtpClient(server, port);
             client.UseDefaultCredentials = false;
@@ -56,10 +57,12 @@ namespace EnviadorEmails {
             MailMessage mailMessage = new MailMessage();
             mailMessage.From = new MailAddress(myemail);
             mailMessage.To.Add(emailTo);
+            
+            mailMessage.CC.Add(myemail);
             //mailMessage.Subject = "Subject: Heyy";
             //mailMessage.Body = "Body: heyyy!";
-            mailMessage.Subject = config.Asunto.ToString();
-            mailMessage.Body = config.Cuerpo.ToString();
+            DateTime fecha = DateTime.Now;
+            string fechaFormateada = fecha.ToString("dd/MM/yyyy");
 
             mailMessage.DeliveryNotificationOptions = System.Net.Mail.DeliveryNotificationOptions.OnSuccess;
             mailMessage.Headers.Add("Disposition-Notification-To", "<"+myemail+">");
@@ -78,13 +81,53 @@ namespace EnviadorEmails {
 
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
+                await Task.Run(async () => { 
+                
                 string selectedFileName = openFileDialog1.FileName;
                 Attachment atachment = new Attachment(selectedFileName);
                 mailMessage.Attachments.Add(atachment);
+                string nombre = "Carla";
+                mailMessage.Subject = config.Asunto.ToString()
+                  .Replace("$name$", nombre)
+                      .Replace("$email$", emailTo)
+                          .Replace("$file$", selectedFileName)
+                            .Replace("$fecha", fechaFormateada);
 
-                try {
-                    //client.Send(mailMessage);
-                    System.Threading.Thread.Sleep(GetRandomNumberEspera() * 1000);
+                    if (config.Cuerpo.ToString().Contains("<html"))
+                    {
+                        mailMessage.IsBodyHtml = true;
+
+
+                        mailMessage.Body = config.Cuerpo.ToString()
+                                            .Replace("$name$", nombre)
+                                                .Replace("$email$", emailTo)
+                                                    .Replace("$file$", selectedFileName)
+                                                    .Replace("$fecha$", fechaFormateada);
+                        mailMessage.Headers.Add("Content-Type", "text/html");
+                    }
+                    else
+                    {
+                        mailMessage.IsBodyHtml = false;
+
+
+                        mailMessage.Body = config.Cuerpo.ToString()
+                                            .Replace("$name$", nombre)
+                                                .Replace("$email$", emailTo)
+                                                    .Replace("$file$", selectedFileName)
+                                                    .Replace("$fecha$", fechaFormateada);
+                        mailMessage.Headers.Add("Content-Type", "text/plane");
+                    }
+                
+
+
+
+
+                    try
+                    {
+                        //client.Send(mailMessage);
+                    int sleeperint = GetRandomNumberEspera();
+                    tv_TiempoEspera.Text = sleeperint.ToString()+"s";
+                    System.Threading.Thread.Sleep(sleeperint * 1000);
                     await client.SendMailAsync(mailMessage).ConfigureAwait(false);
                 }
                 catch (Exception ex)
@@ -146,26 +189,28 @@ namespace EnviadorEmails {
                         MessageBox.Show("ERROR DE CONEXIÓN,\n REVISE LA CONEXIÓN A INTERNET.", "ERROR DE CONEXIÓN", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
+                });
 
 
-               /*
-                tb_fileNameData.Text= ex.ToString();
-                    if (ex.Message.ToString().Contains("No es posible conectar con el servidor remoto")) {
-                        MessageBox.Show("ERROR EN LA CONFIGURACIÓN DE CONEXIÓN\nREVISE EL SERVIDOR Y EL PUERTO.", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                    else if (ex.Message.ToString().Contains("This message was blocked because its content presents a potential")){
-                        MessageBox.Show("ERROR AL ENVIAR EL ARCHIVO,\n FUE BLOQUEADO POR CONTENIDO POTENCIALMENTE PELIGROSO.", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                    else if (ex.Message.ToString().Contains("No se pueden leer los datos de la conexión de transporte"))
-                    {
-                        MessageBox.Show("ERROR AL ENVIAR EL ARCHIVO,\n ARCHIVO DEMASIADO GRANDE, RECHAZADO POREL SERVIDOR.", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                    else
-                    {
-                        MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                */
+                /*
+                 tb_fileNameData.Text= ex.ToString();
+                     if (ex.Message.ToString().Contains("No es posible conectar con el servidor remoto")) {
+                         MessageBox.Show("ERROR EN LA CONFIGURACIÓN DE CONEXIÓN\nREVISE EL SERVIDOR Y EL PUERTO.", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                     }
+                     else if (ex.Message.ToString().Contains("This message was blocked because its content presents a potential")){
+                         MessageBox.Show("ERROR AL ENVIAR EL ARCHIVO,\n FUE BLOQUEADO POR CONTENIDO POTENCIALMENTE PELIGROSO.", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                     }
+                     else if (ex.Message.ToString().Contains("No se pueden leer los datos de la conexión de transporte"))
+                     {
+                         MessageBox.Show("ERROR AL ENVIAR EL ARCHIVO,\n ARCHIVO DEMASIADO GRANDE, RECHAZADO POREL SERVIDOR.", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                     }
+                     else
+                     {
+                         MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                     }
+                 */
             }
+            
 
             /*
              using(var reader = new StreamReader(@"C:\test.csv"))
@@ -265,8 +310,16 @@ namespace EnviadorEmails {
 
         private void btn_ReadFile(object sender, EventArgs e)
         {
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    filePath = openFileDialog.FileName;
+                }
+            }
             if (filePath != null && filePath.Length > 0)
             {
+                tb_fileNameData.Text = filePath;
                 string[] lines = File.ReadAllLines(filePath);
 
                 for (int i = 1; i < lines.Length; i++)
@@ -280,7 +333,19 @@ namespace EnviadorEmails {
                     });
                 }
             }
+            numTotal = personas.Count;
+            tv_NumEnviados.Text = numEnviados+"/1000";
+            tv_NumErrores.Text = numErrors.ToString();
+            int numeroPendientes = (numTotal-numErrors + numEnviados);
+            if (numeroPendientes < 0){numeroPendientes = 0;}
+            tv_NumPendientes.Text = numeroPendientes.ToString();
+
+            foreach (Persona persona in personas)
+            {
+                grid_datos.Rows.Add(persona.Nombre, persona.Email, persona.Archivo);
+            }
         }
+
 
         public int GetRandomNumberEspera()
         {
@@ -307,7 +372,10 @@ namespace EnviadorEmails {
         {
             readConfigFile();
             tv_emailEnUso.Text = config.Email.ToString();
+            grid_datos.AutoGenerateColumns = false;
+            
 
         }
+
     }
 }

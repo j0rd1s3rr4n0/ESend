@@ -7,6 +7,8 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net.Mail;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -81,6 +83,52 @@ namespace EnviadorEmails
         private void btnCancel_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Task.Run(async () =>
+            {
+                SendEmail("EMAIL DE TEST","Esto es un email de test.");
+            });
+        }
+
+        void SendEmail(string subject, string body)
+        {
+            tv_estado.Text = "Pendiente";
+            if ((tb_emailToTest.Text.ToString().Length > 0) && (tb_emailToTest != null))
+            {
+                try
+                {
+                    MailMessage mail = new MailMessage();
+                    SmtpClient SmtpServer = new SmtpClient(tb_server.Text.ToString());
+
+                    mail.From = new MailAddress(tb_email.Text.ToString());
+                    mail.To.Add(tb_emailToTest.Text.ToString());
+                    mail.Subject = subject;
+                    mail.Body = body;
+
+                    SmtpServer.Port = 587;
+                    SmtpServer.Credentials = new NetworkCredential(tb_email.Text.ToString(), tb_password.Text.ToString());
+                    SmtpServer.EnableSsl = true;
+
+                    SmtpServer.Send(mail);
+
+                    //MessageBox.Show("REVISE SU EMAIL", "EMAIL ENVIADO", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    tv_estado.Text = "Enviado";
+
+                }
+                catch (SmtpException ex)
+                {
+                    //MessageBox.Show(ex.Message, "ERROR SMTP", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    tv_estado.Text = "Error - Connexion";
+                }
+                catch (Exception ex)
+                {
+                    //MessageBox.Show(ex.Message, "ERROR GENERAL", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    tv_estado.Text = "Error - "+ ex.Message;
+                }
+            }
         }
     }
 }
