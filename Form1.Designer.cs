@@ -152,6 +152,7 @@
             // tv_NumErrores
             // 
             resources.ApplyResources(this.tv_NumErrores, "tv_NumErrores");
+            this.tv_NumErrores.ForeColor = System.Drawing.Color.Red;
             this.tv_NumErrores.Name = "tv_NumErrores";
             // 
             // label16
@@ -172,6 +173,7 @@
             // tv_NumEnviados
             // 
             resources.ApplyResources(this.tv_NumEnviados, "tv_NumEnviados");
+            this.tv_NumEnviados.ForeColor = System.Drawing.Color.Lime;
             this.tv_NumEnviados.Name = "tv_NumEnviados";
             this.tv_NumEnviados.Click += new System.EventHandler(this.label2_Click);
             // 
@@ -245,6 +247,7 @@
             resources.ApplyResources(this.button3, "button3");
             this.button3.Name = "button3";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // tb_FolderFile
             // 
