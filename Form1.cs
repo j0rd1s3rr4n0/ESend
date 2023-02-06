@@ -38,8 +38,8 @@ namespace EnviadorEmails {
         // nombre_apellidos ; email ; fichero.pdf
         private async void button1_ClickAsync(object sender, EventArgs e)
         {
-            
-            string emailTo = "sanchezcarla2204@gmail.com"; // "jordiserrano@protonmail.ch"
+
+            string emailTo = "abdellah.echchana@mataro.epiaedu.cat";// "jordiserrano@protonmail.ch"
             await readConfigFile();
 
             string myemail = config.Email.ToString();
@@ -86,7 +86,7 @@ namespace EnviadorEmails {
                 string selectedFileName = openFileDialog1.FileName;
                 Attachment atachment = new Attachment(selectedFileName);
                 mailMessage.Attachments.Add(atachment);
-                string nombre = "Carla";
+                string nombre = "Abdellah";
                 mailMessage.Subject = config.Asunto.ToString()
                   .Replace("$name$", nombre)
                       .Replace("$email$", emailTo)
