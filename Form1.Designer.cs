@@ -60,6 +60,7 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.tv_emailEnUso = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
+            this.button2 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.grid_datos)).BeginInit();
             this.gb_estadisticas.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -87,6 +88,7 @@
             this.grid_datos.AllowUserToAddRows = false;
             this.grid_datos.AllowUserToDeleteRows = false;
             this.grid_datos.AllowUserToOrderColumns = true;
+            resources.ApplyResources(this.grid_datos, "grid_datos");
             this.grid_datos.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.grid_datos.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.grid_datos.BackgroundColor = System.Drawing.SystemColors.Control;
@@ -98,7 +100,6 @@
             this.fullname,
             this.email,
             this.file});
-            resources.ApplyResources(this.grid_datos, "grid_datos");
             this.grid_datos.GridColor = System.Drawing.SystemColors.Control;
             this.grid_datos.MultiSelect = false;
             this.grid_datos.Name = "grid_datos";
@@ -290,10 +291,20 @@
             resources.ApplyResources(this.label10, "label10");
             this.label10.Name = "label10";
             // 
+            // button2
+            // 
+            resources.ApplyResources(this.button2, "button2");
+            this.button2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.button2.ForeColor = System.Drawing.SystemColors.Control;
+            this.button2.Name = "button2";
+            this.button2.UseVisualStyleBackColor = false;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
             // Form1
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.tv_emailEnUso);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.pictureBox2);
@@ -305,12 +316,9 @@
             this.Controls.Add(this.btnSendMail);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.HelpButton = true;
             this.MaximizeBox = false;
-            this.MinimizeBox = false;
             this.Name = "Form1";
-            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
-            this.TopMost = true;
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.grid_datos)).EndInit();
             this.gb_estadisticas.ResumeLayout(false);
@@ -358,6 +366,7 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label tv_emailEnUso;
         private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Button button2;
     }
 }
 

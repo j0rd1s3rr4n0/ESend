@@ -22,6 +22,8 @@ namespace EnviadorEmails
         string filePath = "";
         string configFile = "config.conf";
         Config config = new Config();
+        ArrayList lista_cc = new ArrayList();
+        ArrayList lista_cco = new ArrayList();
         public FormSettings()
         {
             InitializeComponent();
@@ -34,9 +36,11 @@ namespace EnviadorEmails
                 Email = tb_email.Text,
                 Contraseña = tb_password.Text,
                 Servidor = tb_server.Text,
-                Puerto = Int32.Parse(tb_port.Text.ToString()) ,
+                Puerto = Int32.Parse(tb_port.Text.ToString()),
                 Asunto = tb_asunto.Text,
                 Cuerpo = tb_cuerpo.Text,
+                EmailsCC = lista_cc,
+                EmailsCCO = lista_cco
             };
 
             string json = JsonConvert.SerializeObject(config, Newtonsoft.Json.Formatting.Indented);
@@ -85,14 +89,6 @@ namespace EnviadorEmails
             this.Close();
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            Task.Run(async () =>
-            {
-                SendEmail("EMAIL DE TEST","Esto es un email de test.");
-            });
-        }
-
         void SendEmail(string subject, string body)
         {
             tv_estado.Text = "Pendiente";
@@ -107,13 +103,10 @@ namespace EnviadorEmails
                     mail.To.Add(tb_emailToTest.Text.ToString());
                     mail.Subject = subject;
                     mail.Body = body;
-
-                    SmtpServer.Port = 587;
+                    SmtpServer.Port = Int32.Parse(tb_port.Text);
                     SmtpServer.Credentials = new NetworkCredential(tb_email.Text.ToString(), tb_password.Text.ToString());
                     SmtpServer.EnableSsl = true;
-
                     SmtpServer.Send(mail);
-
                     //MessageBox.Show("REVISE SU EMAIL", "EMAIL ENVIADO", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     tv_estado.Text = "Enviado";
 
@@ -129,6 +122,67 @@ namespace EnviadorEmails
                     tv_estado.Text = "Error - "+ ex.Message;
                 }
             }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            lista_cc = new ArrayList();
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "CSV Files (*.csv)|*.csv";
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                using (StreamReader reader = new StreamReader(openFileDialog.FileName))
+                {
+                    while (!reader.EndOfStream)
+                    {
+                        var line = reader.ReadLine();
+                        lista_cc.Add(line);
+                    }
+                }
+
+                //MailMessage message = new MailMessage();
+                //foreach (string elemento_cc in lista_cc)
+                //{
+                //    //message.Bcc.Add(new MailAddress(elemento_cc));
+                //}
+                grid_CC.DataSource = lista_cc;
+            }
+            
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {   
+            lista_cco = new ArrayList();
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "CSV Files (*.csv)|*.csv";
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                using (StreamReader reader = new StreamReader(openFileDialog.FileName))
+                {
+                    while (!reader.EndOfStream)
+                    {
+                        var line = reader.ReadLine();
+                        lista_cco.Add(line);
+                    }
+                }
+
+                //MailMessage message = new MailMessage();
+                foreach (string elemento_cco in lista_cco)
+                {
+                    grid_CCO.Rows.Add(elemento_cco);
+                }
+
+                grid_CCO.ColumnCount = 1;
+                grid_CCO.Columns[0].Name = "Direcciones de correo electrónico";
+
+            }
+        }
+
+        private async void btnTestEmail_Click(object sender, EventArgs e)
+        {
+            SendEmail("EMAIL DE TEST", "Esto es un email de test.");
         }
     }
 }

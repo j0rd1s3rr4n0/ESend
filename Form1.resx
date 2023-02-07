@@ -133,7 +133,7 @@
     <value>NoControl</value>
   </data>
   <data name="btnSendMail.Location" type="System.Drawing.Point, System.Drawing">
-    <value>513, 277</value>
+    <value>506, 289</value>
   </data>
   <data name="btnSendMail.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>10, 10, 10, 10</value>
@@ -160,7 +160,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;btnSendMail.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>9</value>
   </data>
   <data name="btnConfig.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -178,7 +178,7 @@
     <value>NoControl</value>
   </data>
   <data name="btnConfig.Location" type="System.Drawing.Point, System.Drawing">
-    <value>659, 277</value>
+    <value>678, 289</value>
   </data>
   <data name="btnConfig.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>10, 10, 10, 10</value>
@@ -211,46 +211,10 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;btnConfig.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>8</value>
   </data>
-  <metadata name="fullname.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="email.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="file.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <data name="grid_datos.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="grid_datos.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-    <value>On</value>
-  </data>
-  <data name="grid_datos.Location" type="System.Drawing.Point, System.Drawing">
-    <value>3, 27</value>
-  </data>
-  <data name="grid_datos.RowHeadersWidth" type="System.Int32, mscorlib">
-    <value>51</value>
-  </data>
-  <data name="grid_datos.Size" type="System.Drawing.Size, System.Drawing">
-    <value>492, 296</value>
-  </data>
-  <data name="grid_datos.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;grid_datos.Name" xml:space="preserve">
-    <value>grid_datos</value>
-  </data>
-  <data name="&gt;&gt;grid_datos.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;grid_datos.Parent" xml:space="preserve">
-    <value>groupBox1</value>
-  </data>
-  <data name="&gt;&gt;grid_datos.ZOrder" xml:space="preserve">
-    <value>0</value>
+  <data name="grid_datos.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
   </data>
   <metadata name="fullname.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -288,131 +252,35 @@
   <data name="file.Width" type="System.Int32, mscorlib">
     <value>107</value>
   </data>
-  <data name="gb_estadisticas.AutoSizeMode" type="System.Windows.Forms.AutoSizeMode, System.Windows.Forms">
-    <value>GrowAndShrink</value>
+  <data name="grid_datos.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>On</value>
   </data>
-  <data name="&gt;&gt;tv_TiempoEspera.Name" xml:space="preserve">
-    <value>tv_TiempoEspera</value>
+  <data name="grid_datos.Location" type="System.Drawing.Point, System.Drawing">
+    <value>3, 27</value>
   </data>
-  <data name="&gt;&gt;tv_TiempoEspera.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="grid_datos.RowHeadersWidth" type="System.Int32, mscorlib">
+    <value>51</value>
   </data>
-  <data name="&gt;&gt;tv_TiempoEspera.Parent" xml:space="preserve">
-    <value>gb_estadisticas</value>
+  <data name="grid_datos.Size" type="System.Drawing.Size, System.Drawing">
+    <value>492, 296</value>
   </data>
-  <data name="&gt;&gt;tv_TiempoEspera.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;label4.Name" xml:space="preserve">
-    <value>label4</value>
-  </data>
-  <data name="&gt;&gt;label4.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;label4.Parent" xml:space="preserve">
-    <value>gb_estadisticas</value>
-  </data>
-  <data name="&gt;&gt;label4.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;tv_NumErrores.Name" xml:space="preserve">
-    <value>tv_NumErrores</value>
-  </data>
-  <data name="&gt;&gt;tv_NumErrores.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tv_NumErrores.Parent" xml:space="preserve">
-    <value>gb_estadisticas</value>
-  </data>
-  <data name="&gt;&gt;tv_NumErrores.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;label16.Name" xml:space="preserve">
-    <value>label16</value>
-  </data>
-  <data name="&gt;&gt;label16.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;label16.Parent" xml:space="preserve">
-    <value>gb_estadisticas</value>
-  </data>
-  <data name="&gt;&gt;label16.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;tv_NumPendientes.Name" xml:space="preserve">
-    <value>tv_NumPendientes</value>
-  </data>
-  <data name="&gt;&gt;tv_NumPendientes.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tv_NumPendientes.Parent" xml:space="preserve">
-    <value>gb_estadisticas</value>
-  </data>
-  <data name="&gt;&gt;tv_NumPendientes.ZOrder" xml:space="preserve">
+  <data name="grid_datos.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
   </data>
-  <data name="&gt;&gt;label14.Name" xml:space="preserve">
-    <value>label14</value>
+  <data name="&gt;&gt;grid_datos.Name" xml:space="preserve">
+    <value>grid_datos</value>
   </data>
-  <data name="&gt;&gt;label14.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;grid_datos.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;label14.Parent" xml:space="preserve">
-    <value>gb_estadisticas</value>
+  <data name="&gt;&gt;grid_datos.Parent" xml:space="preserve">
+    <value>groupBox1</value>
   </data>
-  <data name="&gt;&gt;label14.ZOrder" xml:space="preserve">
-    <value>5</value>
+  <data name="&gt;&gt;grid_datos.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
-  <data name="&gt;&gt;tv_NumEnviados.Name" xml:space="preserve">
-    <value>tv_NumEnviados</value>
-  </data>
-  <data name="&gt;&gt;tv_NumEnviados.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tv_NumEnviados.Parent" xml:space="preserve">
-    <value>gb_estadisticas</value>
-  </data>
-  <data name="&gt;&gt;tv_NumEnviados.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="&gt;&gt;label1.Name" xml:space="preserve">
-    <value>label1</value>
-  </data>
-  <data name="&gt;&gt;label1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;label1.Parent" xml:space="preserve">
-    <value>gb_estadisticas</value>
-  </data>
-  <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="gb_estadisticas.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Segoe UI, 10.8pt, style=Bold</value>
-  </data>
-  <data name="gb_estadisticas.Location" type="System.Drawing.Point, System.Drawing">
-    <value>506, 3</value>
-  </data>
-  <data name="gb_estadisticas.Size" type="System.Drawing.Size, System.Drawing">
-    <value>294, 207</value>
-  </data>
-  <data name="gb_estadisticas.TabIndex" type="System.Int32, mscorlib">
-    <value>7</value>
-  </data>
-  <data name="gb_estadisticas.Text" xml:space="preserve">
-    <value>Estadisticas</value>
-  </data>
-  <data name="&gt;&gt;gb_estadisticas.Name" xml:space="preserve">
-    <value>gb_estadisticas</value>
-  </data>
-  <data name="&gt;&gt;gb_estadisticas.Type" xml:space="preserve">
-    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;gb_estadisticas.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;gb_estadisticas.ZOrder" xml:space="preserve">
-    <value>6</value>
+  <data name="gb_estadisticas.AutoSizeMode" type="System.Windows.Forms.AutoSizeMode, System.Windows.Forms">
+    <value>GrowAndShrink</value>
   </data>
   <data name="tv_TiempoEspera.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -424,7 +292,10 @@
     <value>NoControl</value>
   </data>
   <data name="tv_TiempoEspera.Location" type="System.Drawing.Point, System.Drawing">
-    <value>252, 156</value>
+    <value>262, 155</value>
+  </data>
+  <data name="tv_TiempoEspera.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
+    <value>Yes</value>
   </data>
   <data name="tv_TiempoEspera.Size" type="System.Drawing.Size, System.Drawing">
     <value>16, 20</value>
@@ -490,7 +361,10 @@
     <value>NoControl</value>
   </data>
   <data name="tv_NumErrores.Location" type="System.Drawing.Point, System.Drawing">
-    <value>252, 117</value>
+    <value>262, 116</value>
+  </data>
+  <data name="tv_NumErrores.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
+    <value>Yes</value>
   </data>
   <data name="tv_NumErrores.Size" type="System.Drawing.Size, System.Drawing">
     <value>16, 20</value>
@@ -553,7 +427,10 @@
     <value>NoControl</value>
   </data>
   <data name="tv_NumPendientes.Location" type="System.Drawing.Point, System.Drawing">
-    <value>252, 78</value>
+    <value>262, 76</value>
+  </data>
+  <data name="tv_NumPendientes.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
+    <value>Yes</value>
   </data>
   <data name="tv_NumPendientes.Size" type="System.Drawing.Size, System.Drawing">
     <value>16, 20</value>
@@ -616,7 +493,10 @@
     <value>NoControl</value>
   </data>
   <data name="tv_NumEnviados.Location" type="System.Drawing.Point, System.Drawing">
-    <value>209, 41</value>
+    <value>219, 41</value>
+  </data>
+  <data name="tv_NumEnviados.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
+    <value>Yes</value>
   </data>
   <data name="tv_NumEnviados.Size" type="System.Drawing.Size, System.Drawing">
     <value>59, 20</value>
@@ -669,6 +549,33 @@
   <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
     <value>7</value>
   </data>
+  <data name="gb_estadisticas.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 10.8pt, style=Bold</value>
+  </data>
+  <data name="gb_estadisticas.Location" type="System.Drawing.Point, System.Drawing">
+    <value>506, 3</value>
+  </data>
+  <data name="gb_estadisticas.Size" type="System.Drawing.Size, System.Drawing">
+    <value>294, 207</value>
+  </data>
+  <data name="gb_estadisticas.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="gb_estadisticas.Text" xml:space="preserve">
+    <value>Estadisticas</value>
+  </data>
+  <data name="&gt;&gt;gb_estadisticas.Name" xml:space="preserve">
+    <value>gb_estadisticas</value>
+  </data>
+  <data name="&gt;&gt;gb_estadisticas.Type" xml:space="preserve">
+    <value>System.Windows.Forms.GroupBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;gb_estadisticas.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;gb_estadisticas.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
   <data name="groupBox1.AutoSizeMode" type="System.Windows.Forms.AutoSizeMode, System.Windows.Forms">
     <value>GrowAndShrink</value>
   </data>
@@ -697,7 +604,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;groupBox1.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>6</value>
   </data>
   <data name="groupBox2.AutoSizeMode" type="System.Windows.Forms.AutoSizeMode, System.Windows.Forms">
     <value>GrowAndShrink</value>
@@ -1073,7 +980,7 @@ Finalizado
     <value>$this</value>
   </data>
   <data name="&gt;&gt;groupBox2.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
   <data name="pictureBox2.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>None</value>
@@ -1106,7 +1013,7 @@ Finalizado
     <value>$this</value>
   </data>
   <data name="&gt;&gt;pictureBox2.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="pictureBox1.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Zoom</value>
@@ -1136,7 +1043,7 @@ Finalizado
     <value>$this</value>
   </data>
   <data name="&gt;&gt;pictureBox1.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
   <data name="tv_emailEnUso.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1148,7 +1055,7 @@ Finalizado
     <value>NoControl</value>
   </data>
   <data name="tv_emailEnUso.Location" type="System.Drawing.Point, System.Drawing">
-    <value>519, 254</value>
+    <value>506, 259</value>
   </data>
   <data name="tv_emailEnUso.Size" type="System.Drawing.Size, System.Drawing">
     <value>110, 20</value>
@@ -1169,7 +1076,7 @@ Finalizado
     <value>$this</value>
   </data>
   <data name="&gt;&gt;tv_emailEnUso.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>1</value>
   </data>
   <data name="label10.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -1202,7 +1109,58 @@ Finalizado
     <value>$this</value>
   </data>
   <data name="&gt;&gt;label10.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
+  </data>
+  <data name="button2.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="button2.AutoSizeMode" type="System.Windows.Forms.AutoSizeMode, System.Windows.Forms">
+    <value>GrowAndShrink</value>
+  </data>
+  <data name="button2.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
+    <value>Zoom</value>
+  </data>
+  <data name="button2.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 7.8pt, style=Bold</value>
+  </data>
+  <data name="button2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="button2.Location" type="System.Drawing.Point, System.Drawing">
+    <value>673, 213</value>
+  </data>
+  <data name="button2.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>10, 10, 10, 10</value>
+  </data>
+  <data name="button2.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>5, 5, 5, 5</value>
+  </data>
+  <data name="button2.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
+    <value>No</value>
+  </data>
+  <data name="button2.Size" type="System.Drawing.Size, System.Drawing">
+    <value>120, 37</value>
+  </data>
+  <data name="button2.TabIndex" type="System.Int32, mscorlib">
+    <value>18</value>
+  </data>
+  <data name="button2.Text" xml:space="preserve">
+    <value>PARAR ENVIOS</value>
+  </data>
+  <data name="button2.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleRight</value>
+  </data>
+  <data name="&gt;&gt;button2.Name" xml:space="preserve">
+    <value>button2</value>
+  </data>
+  <data name="&gt;&gt;button2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;button2.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;button2.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>

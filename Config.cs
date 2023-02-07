@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,5 +15,7 @@ namespace EnviadorEmails
         public int Puerto { get; set; }
         public string Asunto { get; set; }
         public string Cuerpo { get; set; }
+        public ArrayList EmailsCC { get; set; }
+        public ArrayList EmailsCCO { get; set; }
     }
 }
