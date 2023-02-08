@@ -1,4 +1,6 @@
-﻿namespace EnviadorEmails
+﻿using System.Windows.Forms;
+
+namespace EnviadorEmails
 {
     partial class FormSettings
     {
@@ -55,6 +57,8 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
             this.grid_CC = new System.Windows.Forms.DataGridView();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.tv_estado = new System.Windows.Forms.Label();
@@ -62,8 +66,6 @@
             this.tb_emailToTest = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
             this.btnTestEmail = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
@@ -231,6 +233,7 @@
             this.tb_cuerpo.Location = new System.Drawing.Point(21, 123);
             this.tb_cuerpo.Multiline = true;
             this.tb_cuerpo.Name = "tb_cuerpo";
+            this.tb_cuerpo.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.tb_cuerpo.Size = new System.Drawing.Size(514, 207);
             this.tb_cuerpo.TabIndex = 21;
             // 
@@ -364,6 +367,40 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Email con Copia (CC)";
             // 
+            // button1
+            // 
+            this.button1.AutoSize = true;
+            this.button1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.button1.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Bold);
+            this.button1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.button1.Location = new System.Drawing.Point(362, 37);
+            this.button1.Margin = new System.Windows.Forms.Padding(10);
+            this.button1.Name = "button1";
+            this.button1.Padding = new System.Windows.Forms.Padding(5);
+            this.button1.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.button1.Size = new System.Drawing.Size(65, 37);
+            this.button1.TabIndex = 8;
+            this.button1.Text = "Vaciar";
+            this.button1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // button2
+            // 
+            this.button2.AutoSize = true;
+            this.button2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.button2.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Bold);
+            this.button2.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.button2.Location = new System.Drawing.Point(43, 37);
+            this.button2.Margin = new System.Windows.Forms.Padding(10);
+            this.button2.Name = "button2";
+            this.button2.Padding = new System.Windows.Forms.Padding(5);
+            this.button2.Size = new System.Drawing.Size(82, 37);
+            this.button2.TabIndex = 7;
+            this.button2.Text = "Importar";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.buttonImportListCC_click);
+            // 
             // grid_CC
             // 
             this.grid_CC.AllowUserToAddRows = false;
@@ -376,9 +413,11 @@
             this.grid_CC.GridColor = System.Drawing.SystemColors.Control;
             this.grid_CC.Location = new System.Drawing.Point(6, 87);
             this.grid_CC.Name = "grid_CC";
+            this.grid_CC.ReadOnly = true;
             this.grid_CC.RowHeadersVisible = false;
             this.grid_CC.RowHeadersWidth = 51;
             this.grid_CC.RowTemplate.Height = 24;
+            this.grid_CC.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.grid_CC.Size = new System.Drawing.Size(490, 178);
             this.grid_CC.TabIndex = 0;
             // 
@@ -458,40 +497,6 @@
             this.btnTestEmail.UseVisualStyleBackColor = true;
             this.btnTestEmail.Click += new System.EventHandler(this.btnTestEmail_Click);
             // 
-            // button1
-            // 
-            this.button1.AutoSize = true;
-            this.button1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.button1.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Bold);
-            this.button1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.button1.Location = new System.Drawing.Point(362, 37);
-            this.button1.Margin = new System.Windows.Forms.Padding(10);
-            this.button1.Name = "button1";
-            this.button1.Padding = new System.Windows.Forms.Padding(5);
-            this.button1.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.button1.Size = new System.Drawing.Size(65, 37);
-            this.button1.TabIndex = 8;
-            this.button1.Text = "Vaciar";
-            this.button1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.button1.UseVisualStyleBackColor = true;
-            // 
-            // button2
-            // 
-            this.button2.AutoSize = true;
-            this.button2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.button2.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Bold);
-            this.button2.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.button2.Location = new System.Drawing.Point(43, 37);
-            this.button2.Margin = new System.Windows.Forms.Padding(10);
-            this.button2.Name = "button2";
-            this.button2.Padding = new System.Windows.Forms.Padding(5);
-            this.button2.Size = new System.Drawing.Size(82, 37);
-            this.button2.TabIndex = 7;
-            this.button2.Text = "Importar";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.button3);
@@ -537,7 +542,7 @@
             this.button4.TabIndex = 7;
             this.button4.Text = "Importar";
             this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
+            this.button4.Click += new System.EventHandler(this.buttonImportCCO_click);
             // 
             // grid_CCO
             // 
@@ -551,9 +556,11 @@
             this.grid_CCO.GridColor = System.Drawing.SystemColors.Control;
             this.grid_CCO.Location = new System.Drawing.Point(6, 87);
             this.grid_CCO.Name = "grid_CCO";
+            this.grid_CCO.ReadOnly = true;
             this.grid_CCO.RowHeadersVisible = false;
             this.grid_CCO.RowHeadersWidth = 51;
             this.grid_CCO.RowTemplate.Height = 24;
+            this.grid_CCO.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.grid_CCO.Size = new System.Drawing.Size(490, 178);
             this.grid_CCO.TabIndex = 0;
             // 

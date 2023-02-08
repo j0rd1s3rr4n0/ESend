@@ -225,9 +225,6 @@
   <data name="fullname.MinimumWidth" type="System.Int32, mscorlib">
     <value>6</value>
   </data>
-  <data name="fullname.Width" type="System.Int32, mscorlib">
-    <value>110</value>
-  </data>
   <metadata name="email.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
@@ -237,9 +234,6 @@
   <data name="email.MinimumWidth" type="System.Int32, mscorlib">
     <value>6</value>
   </data>
-  <data name="email.Width" type="System.Int32, mscorlib">
-    <value>87</value>
-  </data>
   <metadata name="file.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
@@ -248,9 +242,6 @@
   </data>
   <data name="file.MinimumWidth" type="System.Int32, mscorlib">
     <value>6</value>
-  </data>
-  <data name="file.Width" type="System.Int32, mscorlib">
-    <value>107</value>
   </data>
   <data name="grid_datos.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>On</value>

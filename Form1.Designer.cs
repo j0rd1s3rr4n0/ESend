@@ -32,9 +32,6 @@
             this.btnSendMail = new System.Windows.Forms.Button();
             this.btnConfig = new System.Windows.Forms.Button();
             this.grid_datos = new System.Windows.Forms.DataGridView();
-            this.fullname = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.email = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.file = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.gb_estadisticas = new System.Windows.Forms.GroupBox();
             this.tv_TiempoEspera = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -61,6 +58,9 @@
             this.tv_emailEnUso = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
+            this.fullname = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.email = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.file = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.grid_datos)).BeginInit();
             this.gb_estadisticas.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -105,24 +105,6 @@
             this.grid_datos.Name = "grid_datos";
             this.grid_datos.ReadOnly = true;
             this.grid_datos.RowTemplate.Height = 24;
-            // 
-            // fullname
-            // 
-            resources.ApplyResources(this.fullname, "fullname");
-            this.fullname.Name = "fullname";
-            this.fullname.ReadOnly = true;
-            // 
-            // email
-            // 
-            resources.ApplyResources(this.email, "email");
-            this.email.Name = "email";
-            this.email.ReadOnly = true;
-            // 
-            // file
-            // 
-            resources.ApplyResources(this.file, "file");
-            this.file.Name = "file";
-            this.file.ReadOnly = true;
             // 
             // gb_estadisticas
             // 
@@ -300,6 +282,27 @@
             this.button2.UseVisualStyleBackColor = false;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
+            // fullname
+            // 
+            this.fullname.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            resources.ApplyResources(this.fullname, "fullname");
+            this.fullname.Name = "fullname";
+            this.fullname.ReadOnly = true;
+            // 
+            // email
+            // 
+            this.email.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            resources.ApplyResources(this.email, "email");
+            this.email.Name = "email";
+            this.email.ReadOnly = true;
+            // 
+            // file
+            // 
+            this.file.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            resources.ApplyResources(this.file, "file");
+            this.file.Name = "file";
+            this.file.ReadOnly = true;
+            // 
             // Form1
             // 
             resources.ApplyResources(this, "$this");
@@ -349,9 +352,6 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label20;
-        private System.Windows.Forms.DataGridViewTextBoxColumn fullname;
-        private System.Windows.Forms.DataGridViewTextBoxColumn email;
-        private System.Windows.Forms.DataGridViewTextBoxColumn file;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.TextBox tb_FolderFile;
         private System.Windows.Forms.PictureBox pictureBox1;
@@ -367,6 +367,9 @@
         private System.Windows.Forms.Label tv_emailEnUso;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn fullname;
+        private System.Windows.Forms.DataGridViewTextBoxColumn email;
+        private System.Windows.Forms.DataGridViewTextBoxColumn file;
     }
 }
 

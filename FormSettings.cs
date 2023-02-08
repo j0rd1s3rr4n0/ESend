@@ -82,6 +82,15 @@ namespace EnviadorEmails
         private void FormSettings_Load(object sender, EventArgs e)
         {
             ReadConfig();
+            lista_cc = config.EmailsCC;
+            lista_cco = config.EmailsCCO;
+            grid_CC.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            grid_CCO.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            grid_CC.DataSource= lista_cc;
+            grid_CCO.DataSource= lista_cco;
+
+
+
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -124,7 +133,7 @@ namespace EnviadorEmails
             }
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void buttonImportListCC_click(object sender, EventArgs e)
         {
             lista_cc = new ArrayList();
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -132,51 +141,45 @@ namespace EnviadorEmails
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                using (StreamReader reader = new StreamReader(openFileDialog.FileName))
+                string[] lines = File.ReadAllLines(openFileDialog.FileName);
+
+                for (int i = 1; i < lines.Length; i++)
                 {
-                    while (!reader.EndOfStream)
+                    string[] fields = lines[i].Split(',');
+                    lista_cc.Add(new email
                     {
-                        var line = reader.ReadLine();
-                        lista_cc.Add(line);
-                    }
+                        Email = fields[0],
+                    });
                 }
+                grid_CC.DataSource = lista_cc;
 
                 //MailMessage message = new MailMessage();
                 //foreach (string elemento_cc in lista_cc)
                 //{
                 //    //message.Bcc.Add(new MailAddress(elemento_cc));
                 //}
-                grid_CC.DataSource = lista_cc;
             }
-            
         }
 
-        private void button4_Click(object sender, EventArgs e)
-        {   
+        private void buttonImportCCO_click(object sender, EventArgs e)
+        {
             lista_cco = new ArrayList();
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "CSV Files (*.csv)|*.csv";
 
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                using (StreamReader reader = new StreamReader(openFileDialog.FileName))
+                string[] lines = File.ReadAllLines(openFileDialog.FileName);
+
+                for (int i = 1; i < lines.Length; i++)
                 {
-                    while (!reader.EndOfStream)
+                    string[] fields = lines[i].Split(',');
+                    lista_cco.Add(new email
                     {
-                        var line = reader.ReadLine();
-                        lista_cco.Add(line);
-                    }
+                        Email = fields[0],
+                    });
                 }
-
-                //MailMessage message = new MailMessage();
-                foreach (string elemento_cco in lista_cco)
-                {
-                    grid_CCO.Rows.Add(elemento_cco);
-                }
-
-                grid_CCO.ColumnCount = 1;
-                grid_CCO.Columns[0].Name = "Direcciones de correo electrónico";
-
+                grid_CCO.DataSource = lista_cco;
             }
         }
 

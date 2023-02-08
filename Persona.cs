@@ -22,4 +22,8 @@ namespace EnviadorEmails
             return Regex.IsMatch(Email, pattern);
         }
     }
+    class email
+    {
+        public string Email { get; set;}
+    }
 }

@@ -19,6 +19,7 @@ using MailKit.Security;
 using System.Data.OleDb;
 using System.Net.Sockets;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Tab;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace EnviadorEmails
 {
@@ -126,10 +127,12 @@ namespace EnviadorEmails
                                 {
                                     Attachment atachment = new Attachment(selectedFileName);
                                     mailMessage.Attachments.Add(atachment);
+                                    string[] textSplit = selectedFileName.Split(new string[] { "\\" }, StringSplitOptions.None);
+                                    string fichero_txt = textSplit[textSplit.Length - 1];
                                     mailMessage.Subject = config.Asunto.ToString()
                                       .Replace("$name$", nombre)
                                           .Replace("$email$", emailTo)
-                                              .Replace("$file$", selectedFileName)
+                                              .Replace("$file$", fichero_txt)
                                                 .Replace("$fecha", fechaFormateada);
 
                                     if (config.Cuerpo.ToString().Contains("<html"))
@@ -140,7 +143,7 @@ namespace EnviadorEmails
                                         mailMessage.Body = config.Cuerpo.ToString()
                                                             .Replace("$name$", nombre)
                                                                 .Replace("$email$", emailTo)
-                                                                    .Replace("$file$", selectedFileName)
+                                                                    .Replace("$file$", fichero_txt)
                                                                     .Replace("$fecha$", fechaFormateada);
                                         mailMessage.Headers.Add("Content-Type", "text/html");
                                     }
@@ -175,13 +178,14 @@ namespace EnviadorEmails
                                     catch (Exception ex)
                                     {
                                         // Verificar conexión a Internet
-                                        string error = await que_ha_pasat();
+                                        string error = que_ha_pasat(ex);
+                                        MessageBox.Show(error);
+                                        numEnviados -= 1;
+                                        numErrors += 1;
                                     }
                                 });
                                 numEnviados += 1;
                                 numTotal -= 1;
-                                tv_NumEnviados.Text = numEnviados.ToString().Replace("-", "") + "/1000";
-                                tv_NumPendientes.Text = numTotal.ToString().Replace("-", "") + "/" + numTotalTotal.ToString().Replace("-", "");
                             }
                             catch (Exception ex)
                             {
@@ -190,9 +194,11 @@ namespace EnviadorEmails
                                 numErrors += 1;
                                 numTotal -= 1;
 
-                                tv_NumErrores.Text = numErrors.ToString().Replace("-", "");
-                                tv_NumPendientes.Text = numTotal.ToString().Replace("-", "");
                             }
+                            tv_NumErrores.Text = numErrors.ToString().Replace("-", "");
+                            tv_NumEnviados.Text = numEnviados.ToString().Replace("-", "") + "/1000";
+                            tv_NumPendientes.Text = numTotal.ToString().Replace("-", "") + "/" + numTotalTotal.ToString().Replace("-", "");
+
                             tv_TiempoEspera.Text = "-";
                         }
                     }
@@ -204,7 +210,7 @@ namespace EnviadorEmails
             }
         }
 
-        private string que_ha_pasat()
+        private string que_ha_pasat(Exception ex)
         {
             readConfigFile();
             if(testConnection()){
@@ -222,7 +228,10 @@ namespace EnviadorEmails
             {
                 return "ERROR DE CREDENCIALES";
             }
-            return "hola";
+            else
+            {
+                return ex.Message.ToString();
+            }
         }
 
         public async Task tempspera(int a)
@@ -614,10 +623,10 @@ namespace EnviadorEmails
             {
                 if (IsPortOpen(server, port))
                 {
-                    return true;
+                    return false;
                 }
             }
-            return false;
+            return true;
         }
 
 
