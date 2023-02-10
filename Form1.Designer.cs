@@ -32,7 +32,14 @@
             this.btnSendMail = new System.Windows.Forms.Button();
             this.btnConfig = new System.Windows.Forms.Button();
             this.grid_datos = new System.Windows.Forms.DataGridView();
+            this.fullname = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.email = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.file = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.gb_estadisticas = new System.Windows.Forms.GroupBox();
+            this.lb_countCCO = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.lb_countCC = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
             this.tv_TiempoEspera = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.tv_NumErrores = new System.Windows.Forms.Label();
@@ -58,9 +65,7 @@
             this.tv_emailEnUso = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
-            this.fullname = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.email = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.file = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cb_requireFile = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.grid_datos)).BeginInit();
             this.gb_estadisticas.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -106,10 +111,35 @@
             this.grid_datos.ReadOnly = true;
             this.grid_datos.RowTemplate.Height = 24;
             // 
+            // fullname
+            // 
+            this.fullname.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            resources.ApplyResources(this.fullname, "fullname");
+            this.fullname.Name = "fullname";
+            this.fullname.ReadOnly = true;
+            // 
+            // email
+            // 
+            this.email.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            resources.ApplyResources(this.email, "email");
+            this.email.Name = "email";
+            this.email.ReadOnly = true;
+            // 
+            // file
+            // 
+            this.file.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            resources.ApplyResources(this.file, "file");
+            this.file.Name = "file";
+            this.file.ReadOnly = true;
+            // 
             // gb_estadisticas
             // 
             resources.ApplyResources(this.gb_estadisticas, "gb_estadisticas");
             this.gb_estadisticas.BackColor = System.Drawing.Color.Transparent;
+            this.gb_estadisticas.Controls.Add(this.lb_countCCO);
+            this.gb_estadisticas.Controls.Add(this.label3);
+            this.gb_estadisticas.Controls.Add(this.lb_countCC);
+            this.gb_estadisticas.Controls.Add(this.label11);
             this.gb_estadisticas.Controls.Add(this.tv_TiempoEspera);
             this.gb_estadisticas.Controls.Add(this.label4);
             this.gb_estadisticas.Controls.Add(this.tv_NumErrores);
@@ -121,6 +151,26 @@
             this.gb_estadisticas.Name = "gb_estadisticas";
             this.gb_estadisticas.TabStop = false;
             this.gb_estadisticas.Enter += new System.EventHandler(this.groupBox1_Enter);
+            // 
+            // lb_countCCO
+            // 
+            resources.ApplyResources(this.lb_countCCO, "lb_countCCO");
+            this.lb_countCCO.Name = "lb_countCCO";
+            // 
+            // label3
+            // 
+            resources.ApplyResources(this.label3, "label3");
+            this.label3.Name = "label3";
+            // 
+            // lb_countCC
+            // 
+            resources.ApplyResources(this.lb_countCC, "lb_countCC");
+            this.lb_countCC.Name = "lb_countCC";
+            // 
+            // label11
+            // 
+            resources.ApplyResources(this.label11, "label11");
+            this.label11.Name = "label11";
             // 
             // tv_TiempoEspera
             // 
@@ -177,6 +227,7 @@
             // 
             resources.ApplyResources(this.groupBox2, "groupBox2");
             this.groupBox2.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox2.Controls.Add(this.cb_requireFile);
             this.groupBox2.Controls.Add(this.label7);
             this.groupBox2.Controls.Add(this.label5);
             this.groupBox2.Controls.Add(this.button4);
@@ -282,26 +333,13 @@
             this.button2.UseVisualStyleBackColor = false;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
-            // fullname
+            // cb_requireFile
             // 
-            this.fullname.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            resources.ApplyResources(this.fullname, "fullname");
-            this.fullname.Name = "fullname";
-            this.fullname.ReadOnly = true;
-            // 
-            // email
-            // 
-            this.email.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            resources.ApplyResources(this.email, "email");
-            this.email.Name = "email";
-            this.email.ReadOnly = true;
-            // 
-            // file
-            // 
-            this.file.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            resources.ApplyResources(this.file, "file");
-            this.file.Name = "file";
-            this.file.ReadOnly = true;
+            resources.ApplyResources(this.cb_requireFile, "cb_requireFile");
+            this.cb_requireFile.Checked = true;
+            this.cb_requireFile.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cb_requireFile.Name = "cb_requireFile";
+            this.cb_requireFile.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -370,6 +408,11 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn fullname;
         private System.Windows.Forms.DataGridViewTextBoxColumn email;
         private System.Windows.Forms.DataGridViewTextBoxColumn file;
+        private System.Windows.Forms.Label lb_countCCO;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label lb_countCC;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.CheckBox cb_requireFile;
     }
 }
 

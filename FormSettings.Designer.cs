@@ -57,8 +57,8 @@ namespace EnviadorEmails
             this.label6 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.btn_ClearGridCC = new System.Windows.Forms.Button();
+            this.btn_ImportCC = new System.Windows.Forms.Button();
             this.grid_CC = new System.Windows.Forms.DataGridView();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.tv_estado = new System.Windows.Forms.Label();
@@ -67,8 +67,8 @@ namespace EnviadorEmails
             this.label14 = new System.Windows.Forms.Label();
             this.btnTestEmail = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
+            this.btn_ClearGridCCO = new System.Windows.Forms.Button();
+            this.btn_ImportCCO = new System.Windows.Forms.Button();
             this.grid_CCO = new System.Windows.Forms.DataGridView();
             this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -356,8 +356,8 @@ namespace EnviadorEmails
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.button1);
-            this.groupBox1.Controls.Add(this.button2);
+            this.groupBox1.Controls.Add(this.btn_ClearGridCC);
+            this.groupBox1.Controls.Add(this.btn_ImportCC);
             this.groupBox1.Controls.Add(this.grid_CC);
             this.groupBox1.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Bold);
             this.groupBox1.Location = new System.Drawing.Point(1016, 12);
@@ -367,39 +367,40 @@ namespace EnviadorEmails
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Email con Copia (CC)";
             // 
-            // button1
+            // btn_ClearGridCC
             // 
-            this.button1.AutoSize = true;
-            this.button1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.button1.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Bold);
-            this.button1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.button1.Location = new System.Drawing.Point(362, 37);
-            this.button1.Margin = new System.Windows.Forms.Padding(10);
-            this.button1.Name = "button1";
-            this.button1.Padding = new System.Windows.Forms.Padding(5);
-            this.button1.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.button1.Size = new System.Drawing.Size(65, 37);
-            this.button1.TabIndex = 8;
-            this.button1.Text = "Vaciar";
-            this.button1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.button1.UseVisualStyleBackColor = true;
+            this.btn_ClearGridCC.AutoSize = true;
+            this.btn_ClearGridCC.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btn_ClearGridCC.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btn_ClearGridCC.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Bold);
+            this.btn_ClearGridCC.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btn_ClearGridCC.Location = new System.Drawing.Point(362, 37);
+            this.btn_ClearGridCC.Margin = new System.Windows.Forms.Padding(10);
+            this.btn_ClearGridCC.Name = "btn_ClearGridCC";
+            this.btn_ClearGridCC.Padding = new System.Windows.Forms.Padding(5);
+            this.btn_ClearGridCC.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.btn_ClearGridCC.Size = new System.Drawing.Size(65, 37);
+            this.btn_ClearGridCC.TabIndex = 8;
+            this.btn_ClearGridCC.Text = "Vaciar";
+            this.btn_ClearGridCC.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btn_ClearGridCC.UseVisualStyleBackColor = true;
+            this.btn_ClearGridCC.Click += new System.EventHandler(this.btn_ClearGridCC_Click);
             // 
-            // button2
+            // btn_ImportCC
             // 
-            this.button2.AutoSize = true;
-            this.button2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.button2.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Bold);
-            this.button2.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.button2.Location = new System.Drawing.Point(43, 37);
-            this.button2.Margin = new System.Windows.Forms.Padding(10);
-            this.button2.Name = "button2";
-            this.button2.Padding = new System.Windows.Forms.Padding(5);
-            this.button2.Size = new System.Drawing.Size(82, 37);
-            this.button2.TabIndex = 7;
-            this.button2.Text = "Importar";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.buttonImportListCC_click);
+            this.btn_ImportCC.AutoSize = true;
+            this.btn_ImportCC.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btn_ImportCC.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Bold);
+            this.btn_ImportCC.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btn_ImportCC.Location = new System.Drawing.Point(43, 37);
+            this.btn_ImportCC.Margin = new System.Windows.Forms.Padding(10);
+            this.btn_ImportCC.Name = "btn_ImportCC";
+            this.btn_ImportCC.Padding = new System.Windows.Forms.Padding(5);
+            this.btn_ImportCC.Size = new System.Drawing.Size(82, 37);
+            this.btn_ImportCC.TabIndex = 7;
+            this.btn_ImportCC.Text = "Importar";
+            this.btn_ImportCC.UseVisualStyleBackColor = true;
+            this.btn_ImportCC.Click += new System.EventHandler(this.buttonImportListCC_click);
             // 
             // grid_CC
             // 
@@ -499,8 +500,8 @@ namespace EnviadorEmails
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.button3);
-            this.groupBox2.Controls.Add(this.button4);
+            this.groupBox2.Controls.Add(this.btn_ClearGridCCO);
+            this.groupBox2.Controls.Add(this.btn_ImportCCO);
             this.groupBox2.Controls.Add(this.grid_CCO);
             this.groupBox2.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Bold);
             this.groupBox2.Location = new System.Drawing.Point(1016, 290);
@@ -508,41 +509,42 @@ namespace EnviadorEmails
             this.groupBox2.Size = new System.Drawing.Size(502, 272);
             this.groupBox2.TabIndex = 19;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Email con Copia (CC)";
+            this.groupBox2.Text = "Email con Copia Oculta (CCO)";
             // 
-            // button3
+            // btn_ClearGridCCO
             // 
-            this.button3.AutoSize = true;
-            this.button3.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.button3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.button3.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Bold);
-            this.button3.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.button3.Location = new System.Drawing.Point(362, 37);
-            this.button3.Margin = new System.Windows.Forms.Padding(10);
-            this.button3.Name = "button3";
-            this.button3.Padding = new System.Windows.Forms.Padding(5);
-            this.button3.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.button3.Size = new System.Drawing.Size(65, 37);
-            this.button3.TabIndex = 8;
-            this.button3.Text = "Vaciar";
-            this.button3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.button3.UseVisualStyleBackColor = true;
+            this.btn_ClearGridCCO.AutoSize = true;
+            this.btn_ClearGridCCO.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btn_ClearGridCCO.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btn_ClearGridCCO.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Bold);
+            this.btn_ClearGridCCO.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btn_ClearGridCCO.Location = new System.Drawing.Point(362, 37);
+            this.btn_ClearGridCCO.Margin = new System.Windows.Forms.Padding(10);
+            this.btn_ClearGridCCO.Name = "btn_ClearGridCCO";
+            this.btn_ClearGridCCO.Padding = new System.Windows.Forms.Padding(5);
+            this.btn_ClearGridCCO.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.btn_ClearGridCCO.Size = new System.Drawing.Size(65, 37);
+            this.btn_ClearGridCCO.TabIndex = 8;
+            this.btn_ClearGridCCO.Text = "Vaciar";
+            this.btn_ClearGridCCO.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btn_ClearGridCCO.UseVisualStyleBackColor = true;
+            this.btn_ClearGridCCO.Click += new System.EventHandler(this.btn_ClearGridCCO_Click);
             // 
-            // button4
+            // btn_ImportCCO
             // 
-            this.button4.AutoSize = true;
-            this.button4.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.button4.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Bold);
-            this.button4.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.button4.Location = new System.Drawing.Point(43, 37);
-            this.button4.Margin = new System.Windows.Forms.Padding(10);
-            this.button4.Name = "button4";
-            this.button4.Padding = new System.Windows.Forms.Padding(5);
-            this.button4.Size = new System.Drawing.Size(82, 37);
-            this.button4.TabIndex = 7;
-            this.button4.Text = "Importar";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.buttonImportCCO_click);
+            this.btn_ImportCCO.AutoSize = true;
+            this.btn_ImportCCO.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btn_ImportCCO.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Bold);
+            this.btn_ImportCCO.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btn_ImportCCO.Location = new System.Drawing.Point(43, 37);
+            this.btn_ImportCCO.Margin = new System.Windows.Forms.Padding(10);
+            this.btn_ImportCCO.Name = "btn_ImportCCO";
+            this.btn_ImportCCO.Padding = new System.Windows.Forms.Padding(5);
+            this.btn_ImportCCO.Size = new System.Drawing.Size(82, 37);
+            this.btn_ImportCCO.TabIndex = 7;
+            this.btn_ImportCCO.Text = "Importar";
+            this.btn_ImportCCO.UseVisualStyleBackColor = true;
+            this.btn_ImportCCO.Click += new System.EventHandler(this.buttonImportCCO_click);
             // 
             // grid_CCO
             // 
@@ -644,11 +646,11 @@ namespace EnviadorEmails
         private System.Windows.Forms.TextBox tb_emailToTest;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Button btnTestEmail;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btn_ClearGridCC;
+        private System.Windows.Forms.Button btn_ImportCC;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button btn_ClearGridCCO;
+        private System.Windows.Forms.Button btn_ImportCCO;
         private System.Windows.Forms.DataGridView grid_CCO;
     }
 }

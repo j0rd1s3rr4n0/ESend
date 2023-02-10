@@ -109,9 +109,7 @@ namespace EnviadorEmails
                         {
                             nombre = persona.Nombre;
                             selectedFileName = ruta + "\\" + persona.Archivo;
-                            //MessageBox.Show(persona.Archivo);
                             tst += 1;
-                            //MessageBox.Show(tst.ToString());
                             try
                             {
                                 // Escribir en el archivo todo.csv
@@ -125,10 +123,33 @@ namespace EnviadorEmails
                                 mailMessage.To.Add(emailTo);
                                 await Task.Run(async () =>
                                 {
-                                    Attachment atachment = new Attachment(selectedFileName);
-                                    mailMessage.Attachments.Add(atachment);
-                                    string[] textSplit = selectedFileName.Split(new string[] { "\\" }, StringSplitOptions.None);
-                                    string fichero_txt = textSplit[textSplit.Length - 1];
+                                    if (cb_requireFile.Checked == true)
+                                    {
+                                        Attachment atachment = new Attachment(selectedFileName);
+                                        mailMessage.Attachments.Add(atachment);
+                                        string[] textSplit = selectedFileName.Split(new string[] { "\\" }, StringSplitOptions.None);
+                                        string fichero_txt = textSplit[textSplit.Length - 1];
+                                    }
+                                    else
+                                    {
+                                        if(selectedFileName != null && selectedFileName != "")
+                                        {
+                                            Attachment atachment = new Attachment(selectedFileName);
+                                            mailMessage.Attachments.Add(atachment);
+                                        }
+                                        else{
+                                        string[] textSplit = selectedFileName.Split(new string[] { "\\" }, StringSplitOptions.None);
+                                        string fichero_txt;
+                                        switch (textSplit[textSplit.Length - 1].Length)
+                                        {
+                                            case 0: fichero_txt = "No Se Asigno Ningun Archivo";break;
+                                            default: fichero_txt = textSplit[textSplit.Length - 1];break;
+                                        }
+
+
+                                    }
+                                    
+
                                     mailMessage.Subject = config.Asunto.ToString()
                                       .Replace("$name$", nombre)
                                           .Replace("$email$", emailTo)
@@ -438,7 +459,7 @@ namespace EnviadorEmails
         public int GetRandomNumberEspera()
         {
             Random random = new Random();
-            return random.Next(2, 11);
+            return random.Next(2, 15);
         }
 
         private void label2_Click(object sender, EventArgs e)

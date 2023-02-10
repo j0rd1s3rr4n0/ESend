@@ -158,6 +158,7 @@ namespace EnviadorEmails
                 //{
                 //    //message.Bcc.Add(new MailAddress(elemento_cc));
                 //}
+
             }
         }
 
@@ -186,6 +187,18 @@ namespace EnviadorEmails
         private async void btnTestEmail_Click(object sender, EventArgs e)
         {
             SendEmail("EMAIL DE TEST", "Esto es un email de test.");
+        }
+
+        private void btn_ClearGridCC_Click(object sender, EventArgs e)
+        {
+            lista_cc = new ArrayList();
+            grid_CC.DataSource = lista_cc;
+        }
+        private void btn_ClearGridCCO_Click(object sender, EventArgs e)
+        {
+            lista_cco = new ArrayList();
+            grid_CCO.DataSource = lista_cco;
+
         }
     }
 }
