@@ -96,7 +96,7 @@ namespace EnviadorEmails
             this.btnCancel.Text = "Cancelar";
             this.btnCancel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnCancel.UseVisualStyleBackColor = true;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            this.btnCancel.Click += new System.EventHandler(this.btn_Cancel);
             // 
             // btnSaveSettings
             // 
@@ -112,7 +112,7 @@ namespace EnviadorEmails
             this.btnSaveSettings.TabIndex = 5;
             this.btnSaveSettings.Text = "Guardar";
             this.btnSaveSettings.UseVisualStyleBackColor = true;
-            this.btnSaveSettings.Click += new System.EventHandler(this.btnSaveSettings_Click);
+            this.btnSaveSettings.Click += new System.EventHandler(this.Save_Settings);
             // 
             // groupBox4
             // 
@@ -384,7 +384,7 @@ namespace EnviadorEmails
             this.btn_ClearGridCC.Text = "Vaciar";
             this.btn_ClearGridCC.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btn_ClearGridCC.UseVisualStyleBackColor = true;
-            this.btn_ClearGridCC.Click += new System.EventHandler(this.btn_ClearGridCC_Click);
+            this.btn_ClearGridCC.Click += new System.EventHandler(this.LimpiarGridCC);
             // 
             // btn_ImportCC
             // 
@@ -400,7 +400,7 @@ namespace EnviadorEmails
             this.btn_ImportCC.TabIndex = 7;
             this.btn_ImportCC.Text = "Importar";
             this.btn_ImportCC.UseVisualStyleBackColor = true;
-            this.btn_ImportCC.Click += new System.EventHandler(this.buttonImportListCC_click);
+            this.btn_ImportCC.Click += new System.EventHandler(this.btn_import_cc);
             // 
             // grid_CC
             // 
@@ -496,7 +496,7 @@ namespace EnviadorEmails
             this.btnTestEmail.Text = "Enviar Test";
             this.btnTestEmail.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnTestEmail.UseVisualStyleBackColor = true;
-            this.btnTestEmail.Click += new System.EventHandler(this.btnTestEmail_Click);
+            this.btnTestEmail.Click += new System.EventHandler(this.TestEmail);
             // 
             // groupBox2
             // 
@@ -528,7 +528,7 @@ namespace EnviadorEmails
             this.btn_ClearGridCCO.Text = "Vaciar";
             this.btn_ClearGridCCO.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btn_ClearGridCCO.UseVisualStyleBackColor = true;
-            this.btn_ClearGridCCO.Click += new System.EventHandler(this.btn_ClearGridCCO_Click);
+            this.btn_ClearGridCCO.Click += new System.EventHandler(this.LimpiarGridCCO);
             // 
             // btn_ImportCCO
             // 
@@ -544,7 +544,7 @@ namespace EnviadorEmails
             this.btn_ImportCCO.TabIndex = 7;
             this.btn_ImportCCO.Text = "Importar";
             this.btn_ImportCCO.UseVisualStyleBackColor = true;
-            this.btn_ImportCCO.Click += new System.EventHandler(this.buttonImportCCO_click);
+            this.btn_ImportCCO.Click += new System.EventHandler(this.btn_Import_cco);
             // 
             // grid_CCO
             // 
@@ -588,7 +588,7 @@ namespace EnviadorEmails
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Configuración";
             this.TopMost = true;
-            this.Load += new System.EventHandler(this.FormSettings_Load);
+            this.Load += new System.EventHandler(this.Settings_Load);
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             this.groupBox3.ResumeLayout(false);

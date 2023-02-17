@@ -26,4 +26,8 @@ namespace EnviadorEmails
     {
         public string Email { get; set;}
     }
+    class filename
+    {
+        public string Name { get; set; }
+    }
 }

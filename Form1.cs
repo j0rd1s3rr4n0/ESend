@@ -1,25 +1,21 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
+using System.Configuration;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
-using System.Net.Mail;
 using System.Net;
-using System.Text;
+using System.Net.Mail;
+using System.Net.Sockets;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Net;
-using System.Net.Mail;
-using System.IO;
-using System.Collections;
-using System.Xml;
-using Newtonsoft.Json;
-using MailKit.Security;
-using System.Data.OleDb;
-using System.Net.Sockets;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Tab;
-using static System.Net.Mime.MediaTypeNames;
+using static Org.BouncyCastle.Math.EC.ECCurve;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 
 namespace EnviadorEmails
 {
@@ -44,185 +40,246 @@ namespace EnviadorEmails
             InitializeComponent();
         }
         // nombre_apellidos ; email ; fichero.pdf
-        private async void button1_ClickAsync(object sender, EventArgs e)
+
+        /*
+            #=====================================================================================
+            *#    _____            _             __      __        _       _     _           
+            *#   |  __ \          | |            \ \    / /       (_)     | |   | |          
+            *#   | |__) |___ _ __ | | __ _  ___ __\ \  / /_ _ _ __ _  __ _| |__ | | ___  ___ 
+            *#   |  _  // _ \ '_ \| |/ _` |/ __/ _ \ \/ / _` | '__| |/ _` | '_ \| |/ _ \/ __|
+            *#   | | \ \  __/ |_) | | (_| | (_|  __/\  / (_| | |  | | (_| | |_) | |  __/\__ \
+            *#   |_|  \_\___| .__/|_|\__,_|\___\___| \/ \__,_|_|  |_|\__,_|_.__/|_|\___||___/
+            *#              | |                                                              
+            *#              |_|                                                                                            
+            #------------------------------------------------------------------------------------
+            *# Name: ReplaceVariables
+            *# params: 
+                    text            :   string
+                    nombre          :   string
+                    emailTo         :   string
+                    fichero_txt     :   string
+                    fechaFormateada :   string
+            *# Purpose:
+                La función reemplaza las variables en el cuerpo de correo electrónico para personalizar
+                el mensaje que se enviará a los destinatarios del correo electrónico.
+            #------------------------------------------------------------------------------------
+            *# Created: 11/01/2023
+            *# Author: J0rd1s3rr4n0
+            #----------------------------------
+            *# Last Update: 11/01/2023
+            *# Update Author: J0rd1s3rr4n0
+            #------------------------------------------------------------------------------------
+            *# Dev How it works
+                La función toma el cuerpo del correo electrónico y busca variables en él. Si encuentra
+                variables, las reemplaza por el valor correspondiente proporcionado en los parámetros.
+                Luego devuelve el cuerpo del correo electrónico personalizado.
+            *# CVEs Patch & Dependencies
+                No hay dependencias relacionadas con esta función.
+                No se han encontrado vulnerabilidades (CVEs) y no hay parches disponibles.
+        */
+        private string ReplaceVariables(string text, string nombre, string emailTo, string fichero_txt, string fechaFormateada)
         {
-            if (carpeta_defined)
+            return text.Replace("$name$", nombre)
+                       .Replace("$email$", emailTo)
+                       .Replace("$file$", fichero_txt)
+                       .Replace("$fecha$", fechaFormateada);
+        }
+
+        /*
+            #=====================================================================================
+            *#    _     _            _____                _ ______                 _ _     
+            *#   | |   | |          / ____|              | |  ____|               (_) |    
+            *#   | |__ | |_ _ __   | (___   ___ _ __   __| | |__   _ __ ___   __ _ _| |___ 
+            *#   | '_ \| __| '_ \   \___ \ / _ \ '_ \ / _` |  __| | '_ ` _ \ / _` | | / __|
+            *#   | |_) | |_| | | |  ____) |  __/ | | | (_| | |____| | | | | | (_| | | \__ \
+            *#   |_.__/ \__|_| |_| |_____/ \___|_| |_|\__,_|______|_| |_| |_|\__,_|_|_|___/
+            *#                 ______                                                      
+            *#                |______|                                                     
+            #------------------------------------------------------------------------------------
+            *# Name: btn_SendEmails
+            *# params: [NO]
+            *# Purpose:
+                La función ReplaceVariables se utiliza para reemplazar variables de una cadena de texto con valores especificados.
+                La cadena de texto que se reemplaza es el primer parámetro, y los valores de las variables son los siguientes cuatro parámetros.
+                Se busca una coincidencia con cada una de las variables $name$, $email$, $file$, $fecha$ y se reemplaza por los valores de los
+                parámetros nombre, emailTo, fichero_txt, fechaFormateada, respectivamente. La función devuelve la cadena de texto resultante.
+            #------------------------------------------------------------------------------------
+            *# Created: 11/01/2023
+            *# Author: J0rd1s3rr4n0
+            #----------------------------------
+            *# Last Update: 11/01/2023
+            *# Update Author: J0rd1s3rr4n0
+            #------------------------------------------------------------------------------------
+            *# Dev How it works
+                Esta función se llama cuando se hace clic en el botón "Limpiar" en la sección "CCO" de la ventana de configuración.
+                Borra los datos de la lista "lista_cco" y actualiza la tabla "grid_CCO" en la interfaz gráfica.
+            *# CVEs Patch & Dependencies
+                No hay dependencias ni vulnerabilidades relacionadas con esta función.
+                No se han encontrado vulnerabilidades (CVEs) y no hay parches disponibles.
+        */
+        private async void btn_SendEmails(object sender, EventArgs e)
+        {
+            if (carpeta_defined || !cb_requireFile.Checked)
             {
-                is_stop = false;
                 numErrors = 0;
                 tv_NumErrores.Text = numErrors.ToString();
-                int tst = 0;
-                bool manual = false;
+                await readConfigFile();
+                string myemail = config.Email.ToString();
+                string mypassword = config.Contraseña.ToString();
+                string server = config.Servidor.ToString();
+                int port = Int32.Parse(config.Puerto.ToString());
+
+                while ((myemail == null || myemail == "") || (mypassword == null || mypassword.Length < 1) || (server == null || server.Length < 1) || (myemail == null || myemail.Length < 1))
+                {
+                    MessageBox.Show("Algun parametro necesario no fue asignado", "REVISE LOS CAMPOS, ERROR CONFIG");
+                    FormSettings f = new FormSettings();
+                    f.ShowDialog();
+                    await readConfigFile();
+                    myemail = config.Email.ToString();
+                    mypassword = config.Contraseña.ToString();
+                    server = config.Servidor.ToString();
+                    port = Int32.Parse(config.Puerto.ToString());
+                }
+                SmtpClient client = new SmtpClient(server, port);
+                client.UseDefaultCredentials = false;
+                client.Credentials = new NetworkCredential(myemail, mypassword);
+                client.EnableSsl = true;
                 foreach (Persona persona in personas)
                 {
-
-                    await readConfigFile();
-
-                    string myemail = config.Email.ToString();
-                    string mypassword = config.Contraseña.ToString();
-                    string server = config.Servidor.ToString();
-                    int port = Int32.Parse(config.Puerto.ToString());
-
-
-                    SmtpClient client = new SmtpClient(server, port);
-                    client.UseDefaultCredentials = false;
-                    // PASSWORD GENERATED BY https://myaccount.google.com/apppasswords
-                    client.Credentials = new NetworkCredential(myemail, mypassword);
-                    client.EnableSsl = true;
-
                     MailMessage mailMessage = new MailMessage();
                     mailMessage.From = new MailAddress(myemail);
-                    string selectedFileName;
-                    mailMessage.CC.Add(myemail);
-                    //mailMessage.Subject = "Subject: Heyy";
-                    //mailMessage.Body = "Body: heyyy!";
-                    DateTime fecha = DateTime.Now;
-                    string fechaFormateada = fecha.ToString("dd/MM/yyyy");
-                    string emailTo = "jordiserrano@protonmail.ch";
+
+                    try
+                    {
+                        ArrayList gs = config.EmailsCC;
+                        string jsonString = JsonConvert.SerializeObject(gs);
+                        var emailList = JsonConvert.DeserializeObject<List<email>>(jsonString);
+                        string[] emailAddressesCC = emailList.Select(x => x.Email).ToArray();
+                        try
+                        {
+                            foreach(string em in emailAddressesCC) { 
+                                mailMessage.CC.Add(em);
+                            }
+                        }catch(Exception ex) {}
+                    }catch(Exception e_cco)
+                    {
+                        
+                    }
+                    try
+                    {
+                        ArrayList gs = config.EmailsCCO;
+                        string jsonString = JsonConvert.SerializeObject(gs);
+                        var emailList = JsonConvert.DeserializeObject<List<email>>(jsonString);
+                        string[] emailAddressesCCO = emailList.Select(x => x.Email).ToArray();
+                        try
+                        {
+                            foreach (string em in emailAddressesCCO)
+                            {
+                                mailMessage.Bcc.Add(em);
+                            }
+                        }
+                        catch (Exception ex) { }
+                    }
+                    catch (Exception e_cco)
+                    {
+
+                    }
+
+
+
+                    string emailTo = persona.Email;
                     mailMessage.DeliveryNotificationOptions = System.Net.Mail.DeliveryNotificationOptions.OnSuccess;
                     mailMessage.Headers.Add("Disposition-Notification-To", "<" + myemail + ">");
+                    
                     mailMessage.Headers.Add("Return-Receipt-To", "<" + myemail + ">");
-                    string nombre = "Nombre_Default";
-                    if (manual)
+                    string nombre = persona.Nombre;
+                    string selectedFileName = ruta + "\\" + persona.Archivo;
+                    try
                     {
-                        emailTo = "jordiserrano@proton.me";
+                        File.AppendAllText("Results/done.csv", $"{persona.Nombre},{persona.Email},{persona.Archivo}\n");
                         mailMessage.To.Add(emailTo);
-                        nombre = "NombreManual";
-                        OpenFileDialog openFileDialog1 = new OpenFileDialog();
-                        switch (ruta != "C:\\" && ruta.Length > 3 && Directory.Exists(ruta))
-                        {
-                            case true: openFileDialog1.InitialDirectory = ruta; break;
-                            default: openFileDialog1.InitialDirectory = "C:\\"; break;
-                        }
-                        openFileDialog1.FilterIndex = 0;
-                        openFileDialog1.RestoreDirectory = true;
 
-                        if (openFileDialog1.ShowDialog() == DialogResult.OK)
+                        await Task.Run(() =>
                         {
-
-                        }
-
-                    }
-                    else
-                    {
-                        if (is_stop == false)
-                        {
-                            nombre = persona.Nombre;
-                            selectedFileName = ruta + "\\" + persona.Archivo;
-                            tst += 1;
-                            try
+                            string[] textSplit = selectedFileName.Split(new string[] { "\\" }, StringSplitOptions.None);
+                            string fichero_txt;
+                            if (cb_requireFile.Checked == true)
                             {
-                                // Escribir en el archivo todo.csv
-
-                                // Agregar al archivo done.csv
-                                File.AppendAllText("Results/done.csv", $"{persona.Nombre},{persona.Email},{persona.Archivo}\n");
-
-                                // Mostrar un mensaje con el nombre de la persona
-                                //MessageBox.Show(persona.Nombre);
-                                emailTo = persona.Email;
-                                mailMessage.To.Add(emailTo);
-                                await Task.Run(async () =>
+                                try
                                 {
-                                    if (cb_requireFile.Checked == true)
-                                    {
-                                        Attachment atachment = new Attachment(selectedFileName);
-                                        mailMessage.Attachments.Add(atachment);
-                                        string[] textSplit = selectedFileName.Split(new string[] { "\\" }, StringSplitOptions.None);
-                                        string fichero_txt = textSplit[textSplit.Length - 1];
-                                    }
-                                    else
-                                    {
-                                        if(selectedFileName != null && selectedFileName != "")
-                                        {
-                                            Attachment atachment = new Attachment(selectedFileName);
-                                            mailMessage.Attachments.Add(atachment);
-                                        }
-                                        else{
-                                        string[] textSplit = selectedFileName.Split(new string[] { "\\" }, StringSplitOptions.None);
-                                        string fichero_txt;
-                                        switch (textSplit[textSplit.Length - 1].Length)
-                                        {
-                                            case 0: fichero_txt = "No Se Asigno Ningun Archivo";break;
-                                            default: fichero_txt = textSplit[textSplit.Length - 1];break;
-                                        }
-
-
-                                    }
-                                    
-
-                                    mailMessage.Subject = config.Asunto.ToString()
-                                      .Replace("$name$", nombre)
-                                          .Replace("$email$", emailTo)
-                                              .Replace("$file$", fichero_txt)
-                                                .Replace("$fecha", fechaFormateada);
-
-                                    if (config.Cuerpo.ToString().Contains("<html"))
-                                    {
-                                        mailMessage.IsBodyHtml = true;
-
-
-                                        mailMessage.Body = config.Cuerpo.ToString()
-                                                            .Replace("$name$", nombre)
-                                                                .Replace("$email$", emailTo)
-                                                                    .Replace("$file$", fichero_txt)
-                                                                    .Replace("$fecha$", fechaFormateada);
-                                        mailMessage.Headers.Add("Content-Type", "text/html");
-                                    }
-                                    else
-                                    {
-                                        mailMessage.IsBodyHtml = false;
-
-
-                                        mailMessage.Body = config.Cuerpo.ToString()
-                                                            .Replace("$name$", nombre)
-                                                                .Replace("$email$", emailTo)
-                                                                    .Replace("$file$", selectedFileName)
-                                                                    .Replace("$fecha$", fechaFormateada);
-                                        mailMessage.Headers.Add("Content-Type", "text/plane");
-                                    }
-
+                                    Attachment attachment = new Attachment(selectedFileName);
+                                    mailMessage.Attachments.Add(attachment);
+                                    fichero_txt = textSplit[textSplit.Length - 1];
+                                }
+                                catch (DirectoryNotFoundException err)
+                                {
+                                    MessageBox.Show(err.Message, "ERROR - DIRECTORIO NO ENCONTRADO");
+                                }
+                                catch (Exception errgen)
+                                {
+                                    MessageBox.Show(errgen.Message, "ERROR");
+                                }
+                            }
+                            else
+                            {
+                                if (selectedFileName != "" || selectedFileName != null)
+                                {
                                     try
                                     {
-                                        //client.Send(mailMessage);
-                                        if (is_stop == false)
-                                        {
-                                            int sleeperint = GetRandomNumberEspera();
-                                            await tempspera(sleeperint);
-                                            if (is_stop == false)
-                                            {
-                                                await client.SendMailAsync(mailMessage).ConfigureAwait(false);
-                                            }
-                                            else { MessageBox.Show("Email No Enviado!"); }
-                                        }
-                                        else { MessageBox.Show("Email No Enviado!"); }
+                                        Attachment attachment = new Attachment(selectedFileName);
+                                        mailMessage.Attachments.Add(attachment);
                                     }
-                                    catch (Exception ex)
+                                    catch (DirectoryNotFoundException err)
                                     {
-                                        // Verificar conexión a Internet
-                                        string error = que_ha_pasat(ex);
-                                        MessageBox.Show(error);
-                                        numEnviados -= 1;
-                                        numErrors += 1;
+                                        MessageBox.Show(err.Message, "ERROR - DIRECTORIO NO ENCONTRADO");
                                     }
-                                });
-                                numEnviados += 1;
-                                numTotal -= 1;
-                            }
-                            catch (Exception ex)
-                            {
-                                // Escribir en el archivo errors.csv
-                                File.AppendAllText("Results/errors.csv", $"{persona.Nombre},{persona.Email},{persona.Archivo},{ex.Message}\n");
-                                numErrors += 1;
-                                numTotal -= 1;
+                                    catch (Exception errgen)
+                                    {
+                                        MessageBox.Show(errgen.Message, "ERROR");
+                                    }
+                                }
+                                fichero_txt = (textSplit[textSplit.Length - 1].Length == 0) ? "No Se Asigno Ningun Archivo" : textSplit[textSplit.Length - 1];
+                                string fechaFormateada = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
+                                mailMessage.Subject = ReplaceVariables(config.Asunto.ToString(), nombre, emailTo, fichero_txt, fechaFormateada);
 
-                            }
-                            tv_NumErrores.Text = numErrors.ToString().Replace("-", "");
-                            tv_NumEnviados.Text = numEnviados.ToString().Replace("-", "") + "/1000";
-                            tv_NumPendientes.Text = numTotal.ToString().Replace("-", "") + "/" + numTotalTotal.ToString().Replace("-", "");
+                                mailMessage.IsBodyHtml = IsHtml(config.Cuerpo.ToString());
+                                mailMessage.Body = ReplaceVariables(config.Cuerpo.ToString(), nombre, emailTo, fichero_txt, fechaFormateada);
 
-                            tv_TiempoEspera.Text = "-";
-                        }
+                                if (mailMessage.IsBodyHtml)
+                                {
+                                    mailMessage.Headers.Add("Content-Type", "text/html");
+                                }
+                                else
+                                {
+                                    mailMessage.Headers.Add("Content-Type", "text/plane");
+                                }
+                                try
+                                {
+                                    client.Send(mailMessage);
+                                    numEnviados += 1;
+                                    numTotal -= 1;
+                                }
+                                catch (Exception wtf)
+                                {
+                                    MessageBox.Show(wtf.Message, "ERROR NO SE PUDO ENVIAR");
+                                }
+                            }
+                        });
                     }
+                    catch (Exception ex)
+                    {
+                        // Escribir en el archivo errors.csv
+                        File.AppendAllText("Results/errors.csv", $"{persona.Nombre},{persona.Email},{persona.Archivo},{ex.Message}\n");
+                        numErrors += 1;
+                        numTotal -= 1;
+
+
+                    }
+                    tv_NumErrores.Text = numErrors.ToString().Replace("-", "");
+                    tv_NumEnviados.Text = numEnviados.ToString().Replace("-", "") + "/1000";
+                    tv_NumPendientes.Text = numTotal.ToString().Replace("-", "") + "/" + numTotalTotal.ToString().Replace("-", "");
+
+                    tv_TiempoEspera.Text = "-";
                 }
             }
             else
@@ -231,6 +288,38 @@ namespace EnviadorEmails
             }
         }
 
+        /*
+            #=====================================================================================
+            *#                       _                                     _   
+            *#                      | |                                   | |  
+            *#     __ _ _   _  ___  | |__   __ _     _ __   __ _ ___  __ _| |_ 
+            *#    / _` | | | |/ _ \ | '_ \ / _` |   | '_ \ / _` / __|/ _` | __|
+            *#   | (_| | |_| |  __/ | | | | (_| |   | |_) | (_| \__ \ (_| | |_ 
+            *#    \__, |\__,_|\___|_|_| |_|\__,_|___| .__/ \__,_|___/\__,_|\__|
+            *#       | |       |______|        |____| |_|                        
+            *#       |_|                            |_|                        
+            #------------------------------------------------------------------------------------
+            *# Name: que_ha_pasat
+            *# params: [Exception ex]
+            *# Purpose:
+                Esta función se utiliza para detectar el tipo de error que se ha producido durante el envío de un correo electrónico.
+            #------------------------------------------------------------------------------------
+            *# Created: 10/02/2023
+            *# Author: J0rd1s3rr4n0
+            #----------------------------------
+            *# Last Update: 10/02/2023
+            *# Update Author: J0rd1s3rr4n0
+            #------------------------------------------------------------------------------------
+            *# Dev How it works
+                Esta función primero llama a la función readConfigFile() para leer el archivo de configuración y configurar
+                los parámetros necesarios para el envío de correo electrónico.
+                A continuación, comprueba si hay problemas de conexión a Internet y, si los hay, devuelve un mensaje de error
+                correspondiente. Luego comprueba si hay un problema de conexión al servidor SMTP, y si lo hay, devuelve un mensaje de error correspondiente.
+                A continuación, comprueba si hay un problema de credenciales, y si lo hay, devuelve un mensaje de error correspondiente.
+                Si no se encuentra ninguno de estos problemas, devuelve el mensaje de error original.
+            *# CVEs Patch & Dependencies
+                No hay vulnerabilidades conocidas ni dependencias.
+        */
         private string que_ha_pasat(Exception ex)
         {
             readConfigFile();
@@ -254,7 +343,38 @@ namespace EnviadorEmails
                 return ex.Message.ToString();
             }
         }
+        /*
+            #=====================================================================================
+            *#    _                                                
+            *#   | |                                               
+            *#   | |_ ___ _ __ ___  _ __  ___ _ __   ___ _ __ __ _ 
+            *#   | __/ _ \ '_ ` _ \| '_ \/ __| '_ \ / _ \ '__/ _` |
+            *#   | ||  __/ | | | | | |_) \__ \ |_) |  __/ | | (_| |
+            *#    \__\___|_| |_| |_| .__/|___/ .__/ \___|_|  \__,_|
+            *#                     | |       | |                   
+            *#                     |_|       |_|                   
+            #------------------------------------------------------------------------------------
+            *# Name: tempspera
+            *# params: int a
+            *# Purpose:
+                Hace una pausa de a segundos e imprime el tiempo restante en tv_TiempoEspera
 
+            #------------------------------------------------------------------------------------
+            *# Created: 11/01/2023
+            *# Author: J0rd1s3rr4n0
+            #----------------------------------
+            *# Last Update: 11/01/2023
+            *# Update Author: J0rd1s3rr4n0
+            #------------------------------------------------------------------------------------
+            *# Dev How it works
+                Se usa la función Thread.Sleep para pausar el hilo actual por 1000 ms, es decir 1s, 
+                luego se imprime en tv_TiempoEspera el número de segundos que quedan, y se repite 
+                este proceso hasta llegar a cero, momento en que se indica que el tiempo de espera
+                ha finalizado.
+
+            *# CVEs Patch & Dependencies
+                Ninguna
+        */
         public async Task tempspera(int a)
         {
             for(int i = a; i>0; i--)
@@ -267,58 +387,148 @@ namespace EnviadorEmails
             tv_TiempoEspera.Text =  "-";
         }
 
-        private void groupBox1_Enter(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox3_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label17_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label4_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label3_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox4_TextChanged(object sender, EventArgs e)
-        {
-
-        }
 
 
+        /*
+         #=====================================================================================
+         *#    _     _           _____             __ _       _____                            
+         *#   | |   | |         / ____|           / _(_)     |_   _|                           
+         *#   | |__ | |_ _ __  | |     ___  _ __ | |_ _  __ _  | |  _ __ ___   __ _  __ _  ___ 
+         *#   | '_ \| __| '_ \ | |    / _ \| '_ \|  _| |/ _` | | | | '_ ` _ \ / _` |/ _` |/ _ \
+         *#   | |_) | |_| | | || |___| (_) | | | | | | | (_| |_| |_| | | | | | (_| | (_| |  __/
+         *#   |_.__/ \__|_| |_|_\_____\___/|_| |_|_| |_|\__, |_____|_| |_| |_|\__,_|\__, |\___|
+         *#                |______|                      __/ |                       __/ |     
+         *#                                             |___/                       |___/      
+         #------------------------------------------------------------------------------------
+            *# Name: btn_ConfigImage
+            *# params: object sender, EventArgs e
+            *# Purpose:
+                Abre el formulario de configuración de imágenes y carga la configuración 
+                del archivo config.json
 
-        // Configuración Image
-        private async void pictureBox2_ClickAsync(object sender, EventArgs e)
+            #------------------------------------------------------------------------------------
+            *# Created: 11/01/2023
+            *# Author: J0rd1s3rr4n0
+            #----------------------------------
+            *# Last Update: 11/01/2023
+            *# Update Author: J0rd1s3rr4n0
+            #------------------------------------------------------------------------------------
+            *# Dev How it works
+                Llama a la función openConfig para abrir el formulario de configuración, luego
+                espera a que se termine de leer el archivo de configuración con readConfigFile.
+
+            *# CVEs Patch & Dependencies
+                Ninguna
+        */
+        private async void btn_ConfigImage(object sender, EventArgs e)
         {
             //await Task.Run(() => openConfig());
             openConfig();
             await readConfigFile();
         }
+
+        /*
+            #=====================================================================================
+            *#    _     _           _____             __      
+            *#   | |   | |         / ____|           / _|     
+            *#   | |__ | |_ _ __  | |     ___  _ __ | |_ __ _ 
+            *#   | '_ \| __| '_ \ | |    / _ \| '_ \|  _/ _` |
+            *#   | |_) | |_| | | || |___| (_) | | | | || (_| |
+            *#   |_.__/ \__|_| |_|_\_____\___/|_| |_|_| \__, |
+            *#                |______|                   __/ |
+            *#                                          |___/ 
+            #------------------------------------------------------------------------------------
+            *# Name: btn_Confg
+            *# params: object sender, EventArgs e
+            *# Purpose:
+                Abre el formulario de configuración y carga la configuración del archivo
+                config.json
+
+            #------------------------------------------------------------------------------------
+            *# Created: 11/01/2023
+            *# Author: J0rd1s3rr4n0
+            #----------------------------------
+            *# Last Update: 11/01/2023
+            *# Update Author: J0rd1s3rr4n0
+            #------------------------------------------------------------------------------------
+            *# Dev How it works
+                Llama a la función openConfig para abrir el formulario de configuración, luego
+                espera a que se termine de leer el archivo de configuración con readConfigFile.
+
+            *# CVEs Patch & Dependencies
+                Ninguna
+        */
         // Configuración Button
-        private async void btnConfig_ClickAsync(object sender, EventArgs e)
+        private async void btn_Confg(object sender, EventArgs e)
         {
             //await Task.Run(() => openConfig());
             openConfig();
             await readConfigFile();
         }
+
+
+
+        /*
+            #=====================================================================================
+            *#                            _____             __ _       
+            *#                           / ____|           / _(_)      
+            *#     ___  _ __   ___ _ __ | |     ___  _ __ | |_ _  __ _ 
+            *#    / _ \| '_ \ / _ \ '_ \| |    / _ \| '_ \|  _| |/ _` |
+            *#   | (_) | |_) |  __/ | | | |___| (_) | | | | | | | (_| |
+            *#    \___/| .__/ \___|_| |_|\_____\___/|_| |_|_| |_|\__, |
+            *#         | |                                        __/ |
+            *#         |_|                                       |___/ 
+            #------------------------------------------------------------------------------------
+            *# Name: openConfig
+            *# params: N/A
+            *# Purpose:
+                Abre el formulario de configuración
+            #------------------------------------------------------------------------------------
+            *# Created: 11/01/2023
+            *# Author: J0rd1s3rr4n0
+            #----------------------------------
+            *# Last Update: 11/01/2023
+            *# Update Author: J0rd1s3rr4n0
+            #------------------------------------------------------------------------------------
+            *# Dev How it works
+                Crea una nueva instancia del formulario de configuración y lo muestra en pantalla.
+            *# CVEs Patch & Dependencies
+                N/A
+        */
         private async Task openConfig()
         {
             Form formulario = new FormSettings();
             formulario.Show();
         }
 
+        /*
+            #=====================================================================================
+            *#                       _  _____             __ _       ______ _ _      
+            *#                      | |/ ____|           / _(_)     |  ____(_) |     
+            *#    _ __ ___  __ _  __| | |     ___  _ __ | |_ _  __ _| |__   _| | ___ 
+            *#   | '__/ _ \/ _` |/ _` | |    / _ \| '_ \|  _| |/ _` |  __| | | |/ _ \
+            *#   | | |  __/ (_| | (_| | |___| (_) | | | | | | | (_| | |    | | |  __/
+            *#   |_|  \___|\__,_|\__,_|\_____\___/|_| |_|_| |_|\__, |_|    |_|_|\___|
+            *#                                                  __/ |                
+            *#                                                 |___/                          
+            #------------------------------------------------------------------------------------
+            *# Name: readConfigFile
+            *# params: N/A
+            *# Purpose:
+                Lee el archivo de configuración y carga la información en la aplicación
+            #------------------------------------------------------------------------------------
+            *# Created: 11/01/2023
+            *# Author: J0rd1s3rr4n0
+            #----------------------------------
+            *# Last Update: 11/01/2023
+            *# Update Author: J0rd1s3rr4n0
+            #------------------------------------------------------------------------------------
+            *# Dev How it works
+                Lee el archivo de configuración y carga la información en la aplicación. Si el archivo no existe, 
+                crea una nueva instancia de Config con valores por defecto y lo guarda en el archivo.
+            *# CVEs Patch & Dependencies
+                N/A
+        */
         public async Task readConfigFile()
         {
             try
@@ -344,6 +554,48 @@ namespace EnviadorEmails
                 File.WriteAllText(configFile, json);
             }
         }
+
+
+        /*
+            #=====================================================================================
+            *#    _     _           _____                _ ______ _ _      
+            *#   | |   | |         |  __ \              | |  ____(_) |     
+            *#   | |__ | |_ _ __   | |__) |___  __ _  __| | |__   _| | ___ 
+            *#   | '_ \| __| '_ \  |  _  // _ \/ _` |/ _` |  __| | | |/ _ \
+            *#   | |_) | |_| | | | | | \ \  __/ (_| | (_| | |    | | |  __/
+            *#   |_.__/ \__|_| |_|_|_|  \_\___|\__,_|\__,_|_|    |_|_|\___|
+            *#                 |______|                                      
+            *#                                                             
+            #------------------------------------------------------------------------------------
+            *# Name: btn_ReadFile
+            *# params: object sender, EventArgs e
+            *# Purpose:
+               Carga el contenido del archivo de Personas, lo inserta en el grid y tambien genra los 
+               archivos de salida. Y define los valores de los parametros de arranque.
+            #------------------------------------------------------------------------------------
+            *# Created: 09/02/2023
+            *# Author: J0rd1s3rr4n0
+            #----------------------------------
+            *# Last Update: 17/02/2023
+            *# Update Author: J0rd1s3rr4n0
+            #------------------------------------------------------------------------------------
+            *# Dev How it works
+                Este código tiene la tarea de leer los datos de un archivo de texto, almacenar los
+                datos de cada persona en una lista de objetos Persona, y luego mover los archivos
+                a una carpeta específica y mostrar el número total de personas, el número de personas
+                enviadas, el número de errores y el número de personas pendientes. El código también
+                agrega cada persona a una tabla para facilitar la visualización de los datos.
+            *# CVEs Patch & Dependencies
+                El código anterior se refiere a una aplicación que realiza un proceso de envío de
+                correos electrónicos masivos. Utiliza un archivo CSV que contiene información de
+                destinatarios, como nombre y correo electrónico. La aplicación crea una carpeta
+                para guardar resultados y mover los archivos CSV originales a la carpeta creada.
+                Luego, recorre el archivo CSV para leer los datos y comenzar el proceso de envío de
+                correos. Por último, se actualizan los valores para los contadores de envíos, errores
+                y pendientes. Esto permite al usuario tener una idea de los resultados del proceso.
+                El código, además, está diseñado para evitar problemas como la sobreescritura de archivos
+                y la creación de directorios en caso de que existan.
+        */
 
         private void btn_ReadFile(object sender, EventArgs e)
         {
@@ -462,20 +714,6 @@ namespace EnviadorEmails
             return random.Next(2, 15);
         }
 
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label5_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label6_Click(object sender, EventArgs e)
-        {
-
-        }
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -487,7 +725,7 @@ namespace EnviadorEmails
 
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void btn_SelFolder(object sender, EventArgs e)
         {
             using (var fbd = new FolderBrowserDialog())
             {
@@ -495,7 +733,6 @@ namespace EnviadorEmails
 
                 if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
                 {
-
                     tb_FolderFile.Text = fbd.SelectedPath;
                     ruta = fbd.SelectedPath;
                     string[] files = Directory.GetFiles(fbd.SelectedPath);
@@ -505,28 +742,20 @@ namespace EnviadorEmails
             }
         }
 
-        private void button2_Click(object sender, EventArgs e)
+
+        private void btn_STOP(object sender, EventArgs e)
         {is_stop = true;}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        /****
-         * 
-         *   COMPROVACIO DE ERRORS 
-         * 
-         ****/
+/*
+#    ______                        _____ _               _    _             
+#   |  ____|                      / ____| |             | |  (_)            
+#   | |__   _ __ _ __ ___  _ __  | |    | |__   ___  ___| | ___ _ __   __ _ 
+#   |  __| | '__| '__/ _ \| '__| | |    | '_ \ / _ \/ __| |/ / | '_ \ / _` |
+#   | |____| |  | | | (_) | |    | |____| | | |  __/ (__|   <| | | | | (_| |
+#   |______|_|  |_|  \___/|_|     \_____|_| |_|\___|\___|_|\_\_|_| |_|\__, |
+#                                                                      __/ |
+#                                                                     |___/ 
+*/
 
         public bool testConnection()
         {
@@ -649,7 +878,53 @@ namespace EnviadorEmails
             }
             return true;
         }
+        private bool IsHtml(string text)
+        {
+            return Regex.IsMatch(text, @"<\w+>");
+        }
+
+        private void btn_FileNameAdapter(object sender, EventArgs e)
+        {
+            ControlPanelFileAdapter ventana_FileAdapter= new ControlPanelFileAdapter();
+            string ruta = tb_FolderFile.Text;
+            ventana_FileAdapter.ruta = ruta;
+            ventana_FileAdapter.ShowDialog();
+        }
+
+        private void tv_NumErrores_Click(object sender, EventArgs e)
+        {
+            string folderPath = System.IO.Directory.GetCurrentDirectory();
+
+            ProcessStartInfo startInfo = new ProcessStartInfo
+            {
+                Arguments = folderPath,
+                FileName = "explorer.exe"
+            };
+            Process.Start(startInfo);
+        }
+
+        private void btn_AssistenciaImage(object sender, EventArgs e)
+        { 
+            //TODO
+        }
 
 
+
+
+        /*
+         
+         */
+        private void groupBox1_Enter(object sender, EventArgs e){}
+
+        private void textBox3_TextChanged(object sender, EventArgs e){}
+
+        private void label17_Click(object sender, EventArgs e) {}
+
+        private void label4_Click(object sender, EventArgs e) {}
+        private void label3_Click(object sender, EventArgs e) {}
+        private void textBox4_TextChanged(object sender, EventArgs e) {}
+        private void label2_Click(object sender, EventArgs e) {}
+        private void label5_Click(object sender, EventArgs e) {}
+        private void label6_Click(object sender, EventArgs e) {}
     }
 }

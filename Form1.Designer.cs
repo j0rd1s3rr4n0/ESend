@@ -50,9 +50,10 @@
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.cb_requireFile = new System.Windows.Forms.CheckBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.button4 = new System.Windows.Forms.Button();
+            this.btn_AdaptarArchivos = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.tb_fileNameData = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
@@ -65,7 +66,6 @@
             this.tv_emailEnUso = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
-            this.cb_requireFile = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.grid_datos)).BeginInit();
             this.gb_estadisticas.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -79,14 +79,14 @@
             resources.ApplyResources(this.btnSendMail, "btnSendMail");
             this.btnSendMail.Name = "btnSendMail";
             this.btnSendMail.UseVisualStyleBackColor = true;
-            this.btnSendMail.Click += new System.EventHandler(this.button1_ClickAsync);
+            this.btnSendMail.Click += new System.EventHandler(this.btn_SendEmails);
             // 
             // btnConfig
             // 
             resources.ApplyResources(this.btnConfig, "btnConfig");
             this.btnConfig.Name = "btnConfig";
             this.btnConfig.UseVisualStyleBackColor = true;
-            this.btnConfig.Click += new System.EventHandler(this.btnConfig_ClickAsync);
+            this.btnConfig.Click += new System.EventHandler(this.btn_Confg);
             // 
             // grid_datos
             // 
@@ -187,6 +187,7 @@
             resources.ApplyResources(this.tv_NumErrores, "tv_NumErrores");
             this.tv_NumErrores.ForeColor = System.Drawing.Color.Red;
             this.tv_NumErrores.Name = "tv_NumErrores";
+            this.tv_NumErrores.Click += new System.EventHandler(this.tv_NumErrores_Click);
             // 
             // label16
             // 
@@ -230,7 +231,7 @@
             this.groupBox2.Controls.Add(this.cb_requireFile);
             this.groupBox2.Controls.Add(this.label7);
             this.groupBox2.Controls.Add(this.label5);
-            this.groupBox2.Controls.Add(this.button4);
+            this.groupBox2.Controls.Add(this.btn_AdaptarArchivos);
             this.groupBox2.Controls.Add(this.label6);
             this.groupBox2.Controls.Add(this.tb_fileNameData);
             this.groupBox2.Controls.Add(this.button1);
@@ -240,6 +241,14 @@
             this.groupBox2.Controls.Add(this.label20);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.TabStop = false;
+            // 
+            // cb_requireFile
+            // 
+            resources.ApplyResources(this.cb_requireFile, "cb_requireFile");
+            this.cb_requireFile.Checked = true;
+            this.cb_requireFile.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cb_requireFile.Name = "cb_requireFile";
+            this.cb_requireFile.UseVisualStyleBackColor = true;
             // 
             // label7
             // 
@@ -252,11 +261,12 @@
             this.label5.Name = "label5";
             this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
-            // button4
+            // btn_AdaptarArchivos
             // 
-            resources.ApplyResources(this.button4, "button4");
-            this.button4.Name = "button4";
-            this.button4.UseVisualStyleBackColor = true;
+            resources.ApplyResources(this.btn_AdaptarArchivos, "btn_AdaptarArchivos");
+            this.btn_AdaptarArchivos.Name = "btn_AdaptarArchivos";
+            this.btn_AdaptarArchivos.UseVisualStyleBackColor = true;
+            this.btn_AdaptarArchivos.Click += new System.EventHandler(this.btn_FileNameAdapter);
             // 
             // label6
             // 
@@ -281,7 +291,7 @@
             resources.ApplyResources(this.button3, "button3");
             this.button3.Name = "button3";
             this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.button3.Click += new System.EventHandler(this.btn_SelFolder);
             // 
             // tb_FolderFile
             // 
@@ -305,7 +315,7 @@
             this.pictureBox2.Image = global::EnviadorEmails.Properties.Resources.settings_icon_gear_3d_render_png;
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.TabStop = false;
-            this.pictureBox2.Click += new System.EventHandler(this.pictureBox2_ClickAsync);
+            this.pictureBox2.Click += new System.EventHandler(this.btn_ConfigImage);
             // 
             // pictureBox1
             // 
@@ -313,6 +323,7 @@
             resources.ApplyResources(this.pictureBox1, "pictureBox1");
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.TabStop = false;
+            this.pictureBox1.Click += new System.EventHandler(this.btn_AssistenciaImage);
             // 
             // tv_emailEnUso
             // 
@@ -331,15 +342,7 @@
             this.button2.ForeColor = System.Drawing.SystemColors.Control;
             this.button2.Name = "button2";
             this.button2.UseVisualStyleBackColor = false;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // cb_requireFile
-            // 
-            resources.ApplyResources(this.cb_requireFile, "cb_requireFile");
-            this.cb_requireFile.Checked = true;
-            this.cb_requireFile.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cb_requireFile.Name = "cb_requireFile";
-            this.cb_requireFile.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.btn_STOP);
             // 
             // Form1
             // 
@@ -398,7 +401,7 @@
         private System.Windows.Forms.Label tv_TiempoEspera;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button btn_AdaptarArchivos;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox tb_fileNameData;
         private System.Windows.Forms.Label label7;
