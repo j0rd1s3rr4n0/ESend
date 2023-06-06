@@ -44,6 +44,18 @@ namespace EnviadorEmails
             InitializeComponent();
         }
         // nombre_apellidos ; email ; fichero.pdf
+        /**
+        * Maneja el evento click del botón "button1".
+        *
+        * Esta función se ejecuta cuando se hace clic en el botón "button1". Realiza el envío de correos electrónicos
+        * a las personas especificadas en la lista de personas. Lee la configuración del archivo de configuración,
+        * establece los parámetros del cliente SMTP, construye el mensaje de correo electrónico y lo envía.
+        * Actualiza el estado del envío en la interfaz de usuario.
+        *
+        * @param sender El objeto que ha generado el evento.
+        * @param e Los argumentos del evento.
+        * @return Nada.
+        */
         private async void button1_ClickAsync(object sender, EventArgs e)
         {
             if (carpeta_defined)
@@ -230,7 +242,16 @@ namespace EnviadorEmails
                 MessageBox.Show("Es Necesario Especificar la ruta\n de donde extraera los archivos que se\nespecifican en el csv", "ERROR");
             }
         }
-
+        /**
+        * Determina el tipo de error que ha ocurrido.
+        *
+        * Esta función analiza la excepción y determina el tipo de error que ha ocurrido
+        * en función de la configuración y los resultados de las pruebas de conexión SMTP.
+        * Devuelve una cadena que describe el tipo de error.
+        *
+        * @param ex La excepción que ha ocurrido.
+        * @return Una cadena que describe el tipo de error.
+        */
         private string que_ha_pasat(Exception ex)
         {
             readConfigFile();
@@ -254,7 +275,15 @@ namespace EnviadorEmails
                 return ex.Message.ToString();
             }
         }
-
+        /**
+        * Realiza una espera de tiempo.
+        *
+        * Esta función realiza una espera de tiempo en segundos, actualizando un componente de la interfaz de usuario.
+        * Al finalizar la espera, restablece el componente a su estado inicial.
+        *
+        * @param a El tiempo de espera en segundos.
+        * @return Una tarea que representa la operación asincrónica.
+        */
         public async Task tempspera(int a)
         {
             for(int i = a; i>0; i--)
@@ -300,6 +329,15 @@ namespace EnviadorEmails
 
 
         // Configuración Image
+        /**
+        * Evento de clic en el PictureBox 2.
+        *
+        * Este evento se dispara cuando se hace clic en el PictureBox 2.
+        * Abre la configuración y lee el archivo de configuración de forma asíncrona.
+        *
+        * @param sender El objeto que desencadenó el evento.
+        * @param e Los argumentos del evento.
+        */
         private async void pictureBox2_ClickAsync(object sender, EventArgs e)
         {
             //await Task.Run(() => openConfig());
@@ -307,18 +345,41 @@ namespace EnviadorEmails
             await readConfigFile();
         }
         // Configuración Button
+        /**
+        * Evento de clic en el botón Config.
+        *
+        * Este evento se dispara cuando se hace clic en el botón Config.
+        * Abre la configuración y lee el archivo de configuración de forma asíncrona.
+        *
+        * @param sender El objeto que desencadenó el evento.
+        * @param e Los argumentos del evento.
+        */
         private async void btnConfig_ClickAsync(object sender, EventArgs e)
         {
             //await Task.Run(() => openConfig());
             openConfig();
             await readConfigFile();
         }
+        /**
+        * Abre la configuración.
+        *
+        * Esta función crea una instancia del formulario FormSettings y lo muestra.
+        *
+        * @return Una tarea que representa la operación asincrónica.
+        */
         private async Task openConfig()
         {
             Form formulario = new FormSettings();
             formulario.Show();
         }
-
+        /**
+        * Lee el archivo de configuración.
+        *
+        * Esta función lee el archivo de configuración y carga los valores en la variable de configuración.
+        * Si el archivo no existe o hay un error al leerlo, se crea un nuevo archivo de configuración con valores predeterminados.
+        *
+        * @return Una tarea que representa la operación asincrónica.
+        */
         public async Task readConfigFile()
         {
             try
@@ -344,7 +405,15 @@ namespace EnviadorEmails
                 File.WriteAllText(configFile, json);
             }
         }
-
+        /**
+        * Evento de clic en el botón ReadFile.
+        *
+        * Este evento se dispara cuando se hace clic en el botón ReadFile.
+        * Abre un cuadro de diálogo para seleccionar un archivo y realiza acciones en base al archivo seleccionado.
+        *
+        * @param sender El objeto que desencadenó el evento.
+        * @param e Los argumentos del evento.
+        */
         private void btn_ReadFile(object sender, EventArgs e)
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
@@ -455,7 +524,21 @@ namespace EnviadorEmails
             }
         }
 
-
+        /**
+        * Genera un número aleatorio de espera.
+        *
+        * Esta función genera un número aleatorio en el rango de 2 a 15.
+        *
+        * @return int El número aleatorio generado.
+        *//**
+ * Evento de carga del formulario.
+ *
+ * Este evento se dispara cuando el formulario se carga.
+ * Lee el archivo de configuración, muestra la información del email en uso, configura la generación automática de columnas en un control DataGridView y establece el texto de un TextBox.
+ *
+ * @param sender El objeto que desencadenó el evento.
+ * @param e Los argumentos del evento.
+ */
         public int GetRandomNumberEspera()
         {
             Random random = new Random();
@@ -476,7 +559,15 @@ namespace EnviadorEmails
         {
 
         }
-
+        /**
+        * Evento de carga del formulario.
+        *
+        * Este evento se dispara cuando el formulario se carga.
+        * Lee el archivo de configuración, muestra la información del email en uso, configura la generación automática de columnas en un control DataGridView y establece el texto de un TextBox.
+        *
+        * @param sender El objeto que desencadenó el evento.
+        * @param e Los argumentos del evento.
+        */
         private void Form1_Load(object sender, EventArgs e)
         {
             readConfigFile();
@@ -486,7 +577,15 @@ namespace EnviadorEmails
 
 
         }
-
+        /**
+        * Evento de clic en el botón 3.
+        *
+        * Este evento se dispara cuando se hace clic en el botón 3.
+        * Muestra un cuadro de diálogo para seleccionar una carpeta y actualiza el texto de un TextBox con la ruta seleccionada.
+        *
+        * @param sender El objeto que desencadenó el evento.
+        * @param e Los argumentos del evento.
+        */
         private void button3_Click(object sender, EventArgs e)
         {
             using (var fbd = new FolderBrowserDialog())
@@ -504,7 +603,15 @@ namespace EnviadorEmails
                 }
             }
         }
-
+        /**
+        * Evento de clic en el botón 2.
+        *
+        * Este evento se dispara cuando se hace clic en el botón 2.
+        * Establece la variable "is_stop" en true.
+        *
+        * @param sender El objeto que desencadenó el evento.
+        * @param e Los argumentos del evento.
+        */
         private void button2_Click(object sender, EventArgs e)
         {is_stop = true;}
 
@@ -527,7 +634,17 @@ namespace EnviadorEmails
          *   COMPROVACIO DE ERRORS 
          * 
          ****/
-
+        /**
+        * Prueba la conexión a través de una solicitud HTTP.
+        *
+        * Esta función realiza una solicitud HTTP a una URL específica para probar la conexión.
+        * Si la solicitud se realiza correctamente (código de estado 200), se considera que la conexión es exitosa y devuelve false.
+        * En caso de error durante la solicitud, se considera que la conexión falló y devuelve true.
+        *
+        * @return bool true si la conexión falló, false si la conexión fue exitosa.
+        * @author @j0rd1s3rr4n0
+        * @date 06/06/2023
+        */
         public bool testConnection()
         {
             try
@@ -545,6 +662,15 @@ namespace EnviadorEmails
             }
             catch (Exception ex){return true;}
         }
+        /**
+        * Verifica las credenciales de correo electrónico.
+        *
+        * Esta función intenta enviar un correo electrónico utilizando las credenciales de configuración proporcionadas.
+        * Si el envío del correo electrónico se realiza correctamente, se considera que las credenciales son válidas y devuelve false.
+        * Si se produce una excepción durante el envío del correo electrónico, se considera que las credenciales son inválidas y devuelve true.
+        *
+        * @return bool true si las credenciales son inválidas, false si las credenciales son válidas.
+        */
         public bool CheckCredentials()
         {
             try
@@ -570,7 +696,19 @@ namespace EnviadorEmails
                 return true;
             }
         }
-
+        /**
+        * Prueba la conexión a un servidor SMTP.
+        *
+        * Esta función intenta establecer una conexión SMTP con el servidor y enviar un mensaje de prueba.
+        * Si la conexión y el envío del mensaje se realizan correctamente, se considera que la conexión es exitosa y devuelve true.
+        * En caso de error durante la conexión o el envío del mensaje, se considera que la conexión falló y devuelve false.
+        *
+        * @param server El servidor SMTP al que se intentará conectar.
+        * @param port El puerto SMTP que se utilizará para la conexión.
+        * @return bool true si la conexión fue exitosa, false si la conexión falló.
+        * @author @j0rd1s3rr4n0
+        * @date 06/06/2023
+        */
         public bool TestSmtpServerConnection(string server, int port)
         {
             try
@@ -589,7 +727,18 @@ namespace EnviadorEmails
             }
         }
 
-
+            /**
+            * Maneja una excepción durante el envío de correo electrónico.
+            *
+            * Esta función maneja diferentes tipos de excepciones relacionadas con el envío de correo electrónico.
+            * Dependiendo del tipo de excepción, muestra un mensaje de error específico y realiza algunas acciones adicionales.
+            * Siempre devuelve true para indicar que se ha manejado la excepción.
+            *
+            * @param errorSend La excepción que se produjo durante el envío de correo electrónico.
+            * @return bool Siempre devuelve true.
+            * @author @j0rd1s3rr4n0
+            * @date 06/06/2023
+            */
         private bool HandleSendEmailException(SmtpException errorSend)
         {
             ArrayList errores = new ArrayList();
@@ -614,14 +763,36 @@ namespace EnviadorEmails
             }
             return true;
         }
-
+        /**
+        * Maneja una excepción al contactar con el servidor.
+        *
+        * Esta función muestra un mensaje de error en un cuadro de diálogo indicando que ha ocurrido un error al contactar con el servidor.
+        * También muestra el mensaje y la fuente de la excepción recibida como parámetro.
+        *
+        * @param error La excepción que se produjo al contactar con el servidor.
+        * @return void
+        * @author @j0rd1s3rr4n0
+        * @date 06/06/2023
+        */
         private void HandleContactServerException(Exception error)
         {
             MessageBox.Show("ERROR AL CONTACTAR CON EL SERVIDOR.", "ERROR DE CONEXIÓN", MessageBoxButtons.OK, MessageBoxIcon.Error);
             MessageBox.Show(error.Message, error.Source);
             is_stop = true;
         }
-
+        /**
+        * Verifica si un puerto está abierto en un servidor.
+        *
+        * Esta función intenta establecer una conexión TCP con el servidor en el puerto especificado.
+        * Si la conexión se establece correctamente, se considera que el puerto está abierto y se devuelve true.
+        * Si se produce una excepción durante la conexión, se considera que el puerto está cerrado y se devuelve false.
+        *
+        * @param server El servidor al que se intentará conectar.
+        * @param port El puerto que se comprobará.
+        * @return bool true si el puerto está abierto, false si está cerrado.
+        * @author @j0rd1s3rr4n0
+        * @date 06/06/2023
+        */
         public static bool IsPortOpen(string server, int port)
         {
             try
@@ -636,7 +807,19 @@ namespace EnviadorEmails
                 return false;
             }
         }
-
+        /**
+        * Verifica si alguno de los puertos SMTP está abierto en un servidor.
+        *
+        * Esta función comprueba si alguno de los puertos SMTP está abierto en el servidor especificado.
+        * Recorre una lista de puertos SMTP predefinidos y utiliza la función IsPortOpen para comprobar si cada uno de ellos está abierto.
+        * Si encuentra un puerto abierto, se considera que el servidor no está configurado correctamente y devuelve false.
+        * Si todos los puertos están cerrados, se considera que el servidor está configurado correctamente y devuelve true.
+        *
+        * @param server El servidor al que se intentará conectar.
+        * @return bool true si ninguno de los puertos SMTP está abierto, false si al menos uno de ellos está abierto.
+         * @author @j0rd1s3rr4n0
+        * @date 06/06/2023
+        */
         public static bool IsSMTPOpen(string server)
         {
             int[] smtpPorts = { 25, 587, 465 };
